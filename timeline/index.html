@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Journey ❤️</title>
 
+<link rel="stylesheet" href="timeline.css">
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<header>
+
+<a href="../index.html" class="home-btn">
+🏠 Home
+</a>
+
+<h1>📅 Our Journey ❤️</h1>
+
+<p>
+Every memory has a date.
+Every date has a story.
+</p>
+
+</header>
+
+<section class="memory-form">
+
+<input
+type="date"
+id="memoryDate">
+
+<input
+type="text"
+id="memoryTitle"
+placeholder="Memory Title">
+
+<textarea
+id="memoryDescription"
+placeholder="Describe the memory...">
+</textarea>
+
+<button onclick="addMemory()">
+❤️ Add Memory
+</button>
+
+</section>
+
+<section
+id="timelineContainer"
+class="timeline">
+
+</section>
+
+<script src="timeline.js"></script>
+
+</body>
+</html>
