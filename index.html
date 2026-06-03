@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Atharva ❤️ Praniti | Memory Vault</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+
+background:
+radial-gradient(circle at top,
+#1a1f4b,
+#050816 70%);
+
+color:white;
+
+overflow-x:hidden;
+
+min-height:100vh;
+
+}
+
+/* STARS */
+
+.stars{
+
+position:fixed;
+
+width:100%;
+height:100%;
+
+top:0;
+left:0;
+
+background-image:
+radial-gradient(white 1px,transparent 1px);
+
+background-size:50px 50px;
+
+opacity:.25;
+
+z-index:-3;
+
+}
+
+/* HEARTS */
+
+.heart{
+
+position:fixed;
+
+font-size:20px;
+
+animation:float 12s linear infinite;
+
+opacity:.4;
+
+pointer-events:none;
+
+}
+
+@keyframes float{
+
+from{
+
+transform:
+translateY(100vh);
+
+}
+
+to{
+
+transform:
+translateY(-100px);
+
+}
+
+}
+
+/* LOCK SCREEN */
+
+.lock-screen{
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+}
+
+.lock-card{
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(20px);
+
+padding:40px;
+
+border-radius:25px;
+
+max-width:600px;
+
+width:100%;
+
+text-align:center;
+
+border:
+1px solid rgba(255,255,255,.1);
+
+box-shadow:
+0 0 40px rgba(255,79,216,.25);
+
+}
+
+.lock-card h1{
+
+font-size:2.5rem;
+
+margin-bottom:20px;
+
+}
+
+.lock-card p{
+
+margin-bottom:25px;
+
+line-height:1.6;
+
+}
+
+input{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:15px;
+
+margin-bottom:20px;
+
+font-size:1rem;
+
+}
+
+button{
+
+padding:15px 25px;
+
+border:none;
+
+border-radius:15px;
+
+cursor:pointer;
+
+background:
+linear-gradient(
+45deg,
+#ff4fd8,
+#6b7cff
+);
+
+color:white;
+
+font-size:1rem;
+
+}
+
+#error{
+
+margin-top:15px;
+
+color:#ff8b8b;
+
+}
+
+/* HOME */
+
+.home{
+
+display:none;
+
+padding:50px 20px;
+
+}
+
+.hero{
+
+text-align:center;
+
+padding:80px 20px;
+
+}
+
+.hero h1{
+
+font-size:4rem;
+
+margin-bottom:20px;
+
+}
+
+.hero p{
+
+font-size:1.2rem;
+
+opacity:.9;
+
+}
+
+/* HUD MENU */
+
+.menu{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:25px;
+
+max-width:1200px;
+
+margin:auto;
+
+}
+
+.card{
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(20px);
+
+padding:30px;
+
+border-radius:25px;
+
+text-decoration:none;
+
+color:white;
+
+transition:.4s;
+
+border:
+1px solid rgba(255,255,255,.1);
+
+}
+
+.card:hover{
+
+transform:
+translateY(-10px);
+
+box-shadow:
+0 0 40px rgba(255,79,216,.35);
+
+}
+
+.card h2{
+
+margin-bottom:15px;
+
+}
+
+.footer{
+
+text-align:center;
+
+margin-top:80px;
+
+opacity:.6;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<div id="heartContainer"></div>
+
+<!-- LOCK -->
+
+<div class="lock-screen"
+id="lockScreen">
+
+<div class="lock-card">
+
+<h1>
+❤️ Atharva & Praniti ❤️
+</h1>
+
+<p>
+
+Every memory has a heartbeat.<br>
+Every heartbeat has a story.
+
+</p>
+
+<h3 id="question"></h3>
+
+<input
+id="answer"
+placeholder="DD/MM/YYYY">
+
+<button onclick="unlockSite()">
+
+Unlock Our Journey ❤️
+
+</button>
+
+<p id="error"></p>
+
+</div>
+
+</div>
+
+<!-- HOME -->
+
+<div class="home"
+id="homePage">
+
+<section class="hero">
+
+<h1>
+ATHARVA ❤️ PRANITI
+</h1>
+
+<p>
+
+A Story Written By Time
+And Protected By Memories
+
+</p>
+
+</section>
+
+<section class="menu">
+
+<a class="card"
+href="timeline/index.html">
+
+<h2>📅 Timeline</h2>
+
+<p>
+Our complete journey.
+</p>
+
+</a>
+
+<a class="card"
+href="messages/index.html">
+
+<h2>💌 Messages</h2>
+
+<p>
+Letters and memories.
+</p>
+
+</a>
+
+<a class="card"
+href="counters/index.html">
+
+<h2>😘 Counters</h2>
+
+<p>
+Kisses, hugs and milestones.
+</p>
+
+</a>
+
+<a class="card"
+href="birthday/index.html">
+
+<h2>🎂 Birthday</h2>
+
+<p>
+Praniti's birthday countdown.
+</p>
+
+</a>
+
+<a class="card"
+href="poetry/index.html">
+
+<h2>🌹 Poetry</h2>
+
+<p>
+Poems and special words.
+</p>
+
+</a>
+
+<a class="card"
+href="gallery/index.html">
+
+<h2>📸 Gallery</h2>
+
+<p>
+Memory scrapbook.
+</p>
+
+</a>
+
+<a class="card"
+href="capsule/index.html">
+
+<h2>🌙 Time Capsule</h2>
+
+<p>
+Letters for the future.
+</p>
+
+</a>
+
+</section>
+
+<div class="footer">
+
+Made with ❤️ for Praniti
+
+</div>
+
+</div>
+
+<script>
+
+const questions=[
+
+{
+q:"When did she say YES?",
+a:"21/03/2026"
+},
+
+{
+q:"When was the Tuljapur blessing?",
+a:"17/01/2025"
+},
+
+{
+q:"When did we first hug?",
+a:"09/03/2026"
+},
+
+{
+q:"When did we first kiss?",
+a:"02/04/2026"
+}
+
+];
+
+const random=
+questions[
+Math.floor(
+Math.random()*questions.length
+)
+];
+
+document.getElementById("question")
+.innerText=random.q;
+
+function unlockSite(){
+
+const answer=
+document.getElementById("answer")
+.value.trim();
+
+if(answer===random.a){
+
+document.getElementById("lockScreen")
+.style.display="none";
+
+document.getElementById("homePage")
+.style.display="block";
+
+}else{
+
+document.getElementById("error")
+.innerText=
+"Wrong memory ❤️";
+
+}
+
+}
+
+const container=
+document.getElementById(
+"heartContainer"
+);
+
+for(let i=0;i<25;i++){
+
+const heart=
+document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=
+Math.random()*100+"%";
+
+heart.style.animationDelay=
+Math.random()*12+"s";
+
+container.appendChild(
+heart
+);
+
+}
+
+</script>
+
+</body>
+</html>
