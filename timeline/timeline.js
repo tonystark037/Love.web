@@ -1,6 +1,8 @@
-// ============================
-// TIMELINE V4 ROYAL EDITION
-// ============================
+// ===========================
+// TIMELINE V5 ROYAL EDITION
+// ===========================
+
+let editingIndex = -1;
 
 let events =
 JSON.parse(
@@ -21,7 +23,7 @@ icon:"💬",
 title:"First Instagram Message",
 date:"2024-01-29",
 time:"22:30",
-note:"A simple message, a huge beginning.",
+note:"A simple message became a beautiful journey.",
 favorite:false
 },
 
@@ -39,7 +41,7 @@ icon:"🙏",
 title:"Tuljapur Blessing",
 date:"2025-01-17",
 time:"",
-note:"God's blessing for the future.",
+note:"God's blessing for our future.",
 favorite:false
 },
 
@@ -57,7 +59,7 @@ icon:"☕",
 title:"Longest Date",
 date:"2025-11-03",
 time:"",
-note:"Spent 2.5 beautiful hours together.",
+note:"Our longest date together.",
 favorite:false
 },
 
@@ -66,7 +68,7 @@ icon:"🎁",
 title:"Surprise Date",
 date:"2025-11-27",
 time:"",
-note:"Unexpected and memorable.",
+note:"An unexpected beautiful day.",
 favorite:false
 },
 
@@ -75,7 +77,7 @@ icon:"🫂",
 title:"First Virtual Hug",
 date:"2026-01-28",
 time:"",
-note:"A virtual hug full of emotions.",
+note:"A virtual hug filled with emotions.",
 favorite:false
 },
 
@@ -102,7 +104,7 @@ icon:"💍",
 title:"She Said Yes",
 date:"2026-03-21",
 time:"",
-note:"A dream come true.",
+note:"A dream became reality.",
 favorite:true
 },
 
@@ -117,9 +119,7 @@ favorite:true
 
 ];
 
-let editingIndex = -1;
-
-// ============================
+// ===========================
 
 function saveStorage(){
 
@@ -130,12 +130,12 @@ JSON.stringify(events)
 
 }
 
-// ============================
+// ===========================
 
-function daysAgo(dateString){
+function daysAgo(date){
 
 const eventDate =
-new Date(dateString);
+new Date(date);
 
 const today =
 new Date();
@@ -145,12 +145,12 @@ today - eventDate;
 
 return Math.floor(
 diff /
-(1000*60*60*24)
+(1000 * 60 * 60 * 24)
 );
 
 }
 
-// ============================
+// ===========================
 
 function updateStats(){
 
@@ -159,15 +159,16 @@ document.getElementById(
 ).innerText =
 events.length;
 
-const proposal =
+const proposalDate =
 new Date("2022-08-02");
 
-const now =
+const today =
 new Date();
 
 const diff =
 Math.floor(
-(now-proposal)/
+(today - proposalDate)
+/
 (1000*60*60*24)
 );
 
@@ -176,19 +177,19 @@ document.getElementById(
 ).innerText =
 diff;
 
-const favs =
+const favCount =
 events.filter(
-e=>e.favorite
+e => e.favorite
 ).length;
 
 document.getElementById(
 "favoriteCount"
 ).innerText =
-favs;
+favCount;
 
 }
 
-// ============================
+// ===========================
 
 function renderHall(){
 
@@ -197,11 +198,13 @@ document.getElementById(
 "hallContainer"
 );
 
-hall.innerHTML="";
+hall.innerHTML = "";
 
 events
-.filter(e=>e.favorite)
-.forEach(event=>{
+.filter(
+e => e.favorite
+)
+.forEach(event => {
 
 hall.innerHTML += `
 
@@ -218,14 +221,42 @@ ${event.title}
 
 }
 
-// ============================
+// ===========================
+
+function toggleDetails(index){
+
+const details =
+document.getElementById(
+`details-${index}`
+);
+
+if(details.style.display === "block"){
+
+details.style.display = "none";
+
+}else{
+
+details.style.display = "block";
+
+}
+
+}
+
+// ===========================
 
 function renderTimeline(){
+
+const container =
+document.getElementById(
+"timelineContainer"
+);
 
 const search =
 document.getElementById(
 "searchInput"
 ).value.toLowerCase();
+
+container.innerHTML = "";
 
 events.sort(
 (a,b)=>
@@ -234,17 +265,8 @@ new Date(a.date)
 new Date(b.date)
 );
 
-const container =
-document.getElementById(
-"timelineContainer"
-);
-
-container.innerHTML="";
-
-let filtered =
-events.filter(event=>{
-
-return (
+const filtered =
+events.filter(event =>
 
 event.title
 .toLowerCase()
@@ -258,21 +280,20 @@ event.note
 
 );
 
-});
-
 filtered.forEach(
 (event,index)=>{
 
-const position =
-index % 2 === 0
-? "top"
-: "bottom";
-
 container.innerHTML += `
 
-<div class="timeline-event ${position}">
+<div class="timeline-event">
 
-<div class="event-card">
+<div class="connector"></div>
+
+<div class="node"></div>
+
+<div
+class="event-card"
+onclick="toggleDetails(${index})">
 
 <h3>
 
@@ -285,12 +306,22 @@ ${event.title}
 
 📅 ${event.date}
 
+</small>
+
+<div
+class="event-details"
+id="details-${index}">
+
+<br>
+
 ${event.time
-? `<br>⏰ ${event.time}`
-: ""
+?
+`<p>⏰ ${event.time}</p>`
+:
+""
 }
 
-</small>
+<br>
 
 <p>
 
@@ -311,7 +342,7 @@ ${event.note}
 
 <button
 class="edit-btn"
-onclick="editEvent(${events.indexOf(event)})">
+onclick="event.stopPropagation();editEvent(${events.indexOf(event)})">
 
 Edit
 
@@ -319,7 +350,7 @@ Edit
 
 <button
 class="delete-btn"
-onclick="deleteEvent(${events.indexOf(event)})">
+onclick="event.stopPropagation();deleteEvent(${events.indexOf(event)})">
 
 Delete
 
@@ -329,9 +360,7 @@ Delete
 
 </div>
 
-<div class="connector"></div>
-
-<div class="node"></div>
+</div>
 
 </div>
 
@@ -344,7 +373,7 @@ renderHall();
 
 }
 
-// ============================
+// ===========================
 
 function saveEvent(){
 
@@ -385,10 +414,11 @@ if(
 ){
 
 alert(
-"Please fill required fields ❤️"
+"Please fill all required fields ❤️"
 );
 
 return;
+
 }
 
 const newEvent = {
@@ -425,7 +455,7 @@ renderTimeline();
 
 }
 
-// ============================
+// ===========================
 
 function editEvent(index){
 
@@ -466,13 +496,16 @@ editingIndex =
 index;
 
 window.scrollTo({
+
 top:0,
+
 behavior:"smooth"
+
 });
 
 }
 
-// ============================
+// ===========================
 
 function deleteEvent(index){
 
@@ -480,7 +513,11 @@ if(
 !confirm(
 "Delete this memory?"
 )
-) return;
+){
+
+return;
+
+}
 
 events.splice(
 index,
@@ -493,36 +530,36 @@ renderTimeline();
 
 }
 
-// ============================
+// ===========================
 
 function clearForm(){
 
 document.getElementById(
 "eventIcon"
-).value="";
+).value = "";
 
 document.getElementById(
 "eventTitle"
-).value="";
+).value = "";
 
 document.getElementById(
 "eventDate"
-).value="";
+).value = "";
 
 document.getElementById(
 "eventTime"
-).value="";
+).value = "";
 
 document.getElementById(
 "eventNote"
-).value="";
+).value = "";
 
 document.getElementById(
 "eventFavorite"
-).checked=false;
+).checked = false;
 
 }
 
-// ============================
+// ===========================
 
 renderTimeline();
