@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poetry Garden 🌹</title>
 
+<link rel="stylesheet" href="poetry.css">
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<header>
+
+<a href="../index.html" class="home-btn">
+🏠 Home
+</a>
+
+<h1>🌹 Poetry Garden ❤️</h1>
+
+<p>
+Every poem is a memory.
+Every memory is a heartbeat.
+</p>
+
+</header>
+
+<section class="controls">
+
+<input
+type="text"
+id="searchBox"
+placeholder="Search poems..."
+oninput="renderPoems()">
+
+</section>
+
+<section class="poem-form">
+
+<select id="poemCategory">
+
+<option value="Love Poems">
+🌹 Love Poems
+</option>
+
+<option value="Letters">
+💌 Letters
+</option>
+
+<option value="Future Dreams">
+✨ Future Dreams
+</option>
+
+<option value="Diary">
+📖 Personal Diary
+</option>
+
+</select>
+
+<input
+type="text"
+id="poemTitle"
+placeholder="Poem Title">
+
+<textarea
+id="poemContent"
+placeholder="Write your poem...">
+</textarea>
+
+<button onclick="savePoem()">
+🌹 Save Poem
+</button>
+
+</section>
+
+<section id="poemContainer"
+class="poem-grid">
+
+</section>
+
+<script src="poetry.js"></script>
+
+</body>
+</html>
