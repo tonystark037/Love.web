@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Counters ❤️</title>
 
+<link rel="stylesheet" href="counters.css">
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<header>
+
+<a href="../index.html" class="home-btn">
+🏠 Home
+</a>
+
+<h1>😘🫂 Love Counters ❤️</h1>
+
+<p>
+Small moments become big memories.
+</p>
+
+</header>
+
+<section class="counter-grid">
+
+<div class="counter-card">
+
+<h2>😘 Kiss Counter</h2>
+
+<div id="kissCount" class="count-number">1</div>
+
+<div id="kissEmojis" class="emoji-display"></div>
+
+<p>
+SWEET FOR HIM AND BITTER FOR HER.....😁🤤😘
+</p>
+
+<div class="buttons">
+
+<button onclick="changeKiss(-1)">➖</button>
+<button onclick="changeKiss(1)">➕</button>
+
+</div>
+
+<div id="kissUpdated"></div>
+
+</div>
+
+<div class="counter-card">
+
+<h2>🫂 Hug Counter</h2>
+
+<div id="hugCount" class="count-number">1</div>
+
+<div id="hugEmojis" class="emoji-display"></div>
+
+<p>
+WE WANT MORE...🫂🤤
+</p>
+
+<div class="buttons">
+
+<button onclick="changeHug(-1)">➖</button>
+<button onclick="changeHug(1)">➕</button>
+
+</div>
+
+<div id="hugUpdated"></div>
+
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat-card">
+<h3>❤️ Proposal</h3>
+<div id="proposalDays"></div>
+</div>
+
+<div class="stat-card">
+<h3>❤️ She Said YES</h3>
+<div id="yesDays"></div>
+</div>
+
+<div class="stat-card">
+<h3>🫂 First Hug</h3>
+<div id="hugDays"></div>
+</div>
+
+<div class="stat-card">
+<h3>😘 First Kiss</h3>
+<div id="kissDays"></div>
+</div>
+
+</section>
+
+<script src="counters.js"></script>
+
+</body>
+</html>
