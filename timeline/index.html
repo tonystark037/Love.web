@@ -4,11 +4,14 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Our Journey ❤️</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="timeline.css">
+<title>❤️ Our Journey ❤️</title>
+
+<link rel="stylesheet"
+href="timeline.css">
 
 </head>
 
@@ -16,51 +19,92 @@
 
 <div id="stars"></div>
 
+<!-- NAV -->
+
 <nav>
 
-<a href="../index.html">🏠 Home</a>
+<a href="../index.html">
+🏠 Home
+</a>
 
 </nav>
 
-<header class="hero">
+<!-- HERO -->
 
-<h1>❤️ Our Journey ❤️</h1>
+<section class="hero">
+
+<h1>
+❤️ Our Journey ❤️
+</h1>
 
 <p>
-Every memory is a milestone.
-Every milestone is a chapter.
+
+Every memory tells a story.
+Every story deserves forever.
+
 </p>
-
-<div class="stats">
-
-<div class="stat-box">
-<h2 id="totalEvents">0</h2>
-<p>Total Memories</p>
-</div>
-
-<div class="stat-box">
-<h2 id="daysTogether">0</h2>
-<p>Days Since Proposal</p>
-</div>
-
-<div class="stat-box">
-<h2 id="favoriteCount">0</h2>
-<p>Hall Of Memories</p>
-</div>
-
-</div>
-
-</header>
-
-<section class="hall-section">
-
-<h2>⭐ Hall Of Memories ⭐</h2>
-
-<div id="hallContainer"></div>
 
 </section>
 
-<section class="controls">
+<!-- STATS -->
+
+<section class="stats-section">
+
+<div class="stat-card">
+
+<h2 id="totalEvents">
+0
+</h2>
+
+<p>
+Total Memories
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h2 id="daysTogether">
+0
+</h2>
+
+<p>
+Days Since Proposal
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h2 id="favoriteCount">
+0
+</h2>
+
+<p>
+Hall Of Memories
+</p>
+
+</div>
+
+</section>
+
+<!-- HALL OF MEMORIES -->
+
+<section class="hall-section">
+
+<h2>
+⭐ Hall Of Memories ⭐
+</h2>
+
+<div id="hallContainer">
+
+</div>
+
+</section>
+
+<!-- SEARCH -->
+
+<section class="search-section">
 
 <input
 type="text"
@@ -70,14 +114,18 @@ onkeyup="renderTimeline()">
 
 </section>
 
-<section class="event-form">
+<!-- ADD EVENT -->
 
-<h2>Add New Memory ❤️</h2>
+<section class="form-section">
+
+<h2>
+➕ Add New Memory
+</h2>
 
 <input
 type="text"
 id="eventIcon"
-placeholder="Icon (❤️ 🫂 😘 ☕ 💍)">
+placeholder="Icon ❤️ 🫂 😘 ☕">
 
 <input
 type="text"
@@ -94,7 +142,7 @@ id="eventTime">
 
 <textarea
 id="eventNote"
-placeholder="Memory Note">
+placeholder="Write memory note...">
 </textarea>
 
 <label class="favorite-label">
@@ -107,13 +155,16 @@ id="eventFavorite">
 
 </label>
 
-<button onclick="saveEvent()">
+<button
+onclick="saveEvent()">
 
-➕ Save Memory
+Save Memory ❤️
 
 </button>
 
 </section>
+
+<!-- TIMELINE -->
 
 <section class="timeline-wrapper">
 
