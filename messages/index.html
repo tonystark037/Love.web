@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Messages ❤️</title>
+
+<link rel="stylesheet" href="messages.css">
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<header>
+
+<a href="../index.html" class="home-btn">
+🏠 Home
+</a>
+
+<h1>💌 Special Messages ❤️</h1>
+
+<p>
+Letters, memories and little moments.
+</p>
+
+</header>
+
+<section class="controls">
+
+<input
+type="text"
+id="searchBox"
+placeholder="Search messages..."
+oninput="renderMessages()">
+
+</section>
+
+<section class="message-form">
+
+<select id="messageSide">
+<option value="her">
+🌹 Praniti
+</option>
+
+<option value="me">
+❤️ Atharva
+</option>
+</select>
+
+<input
+type="text"
+id="messageTitle"
+placeholder="Message Title">
+
+<textarea
+id="messageText"
+placeholder="Write your message...">
+</textarea>
+
+<button onclick="saveMessage()">
+💌 Save Message
+</button>
+
+</section>
+
+<section class="messages-grid">
+
+<div>
+
+<h2 class="column-title">
+🌹 Praniti's Letters
+</h2>
+
+<div id="herMessages"></div>
+
+</div>
+
+<div>
+
+<h2 class="column-title">
+❤️ Atharva's Letters
+</h2>
+
+<div id="myMessages"></div>
+
+</div>
+
+</section>
+
+<script src="messages.js"></script>
+
+</body>
+</html>
