@@ -1,192 +1,214 @@
-const defaultTimeline = [
+// ============================
+// TIMELINE V4 ROYAL EDITION
+// ============================
+
+let events =
+JSON.parse(
+localStorage.getItem("royalTimelineEvents")
+) || [
 
 {
+icon:"❤️",
+title:"First Proposal",
 date:"2022-08-02",
-title:"❤️ First Proposal",
-description:"Proposed Praniti at 12:45 PM"
+time:"12:45",
+note:"The day everything started.",
+favorite:true
 },
 
 {
+icon:"💬",
+title:"First Instagram Message",
 date:"2024-01-29",
-title:"📱 First Instagram Message",
-description:"Messaged her on Instagram at 10:30 PM"
+time:"22:30",
+note:"A simple message, a huge beginning.",
+favorite:false
 },
 
 {
+icon:"☕",
+title:"First Date",
 date:"2025-01-15",
-title:"☕ First Date",
-description:"Met for the first time for 30 minutes"
+time:"",
+note:"Met for the first time for 30 minutes.",
+favorite:true
 },
 
 {
+icon:"🙏",
+title:"Tuljapur Blessing",
 date:"2025-01-17",
-title:"🙏 Tuljapur Blessing",
-description:"God's blessing for our future"
+time:"",
+note:"God's blessing for the future.",
+favorite:false
 },
 
 {
+icon:"❤️",
+title:"Closeness Feeling",
 date:"2025-10-14",
-title:"❤️ Closeness Feeling",
-description:"Praniti expressed her closeness feeling"
+time:"",
+note:"She expressed her closeness feeling.",
+favorite:false
 },
 
 {
+icon:"☕",
+title:"Longest Date",
 date:"2025-11-03",
-title:"🌹 Longest Date",
-description:"2.5 hour date together"
+time:"",
+note:"Spent 2.5 beautiful hours together.",
+favorite:false
 },
 
 {
+icon:"🎁",
+title:"Surprise Date",
 date:"2025-11-27",
-title:"🎁 Surprise Date",
-description:"A beautiful surprise memory"
+time:"",
+note:"Unexpected and memorable.",
+favorite:false
 },
 
 {
+icon:"🫂",
+title:"First Virtual Hug",
 date:"2026-01-28",
-title:"🫂 First Virtual Hug",
-description:"First virtual hug"
+time:"",
+note:"A virtual hug full of emotions.",
+favorite:false
 },
 
 {
+icon:"😘",
+title:"First Virtual Kiss",
 date:"2026-02-14",
-title:"😘 First Virtual Kiss",
-description:"First virtual kiss"
+time:"",
+note:"Valentine's Day memory.",
+favorite:false
 },
 
 {
+icon:"🫂",
+title:"First Hug",
 date:"2026-03-09",
-title:"🫂 First Hug",
-description:"First hug together"
+time:"",
+note:"One of the happiest moments.",
+favorite:true
 },
 
 {
+icon:"💍",
+title:"She Said Yes",
 date:"2026-03-21",
-title:"❤️ She Said YES",
-description:"Accepted the proposal"
+time:"",
+note:"A dream come true.",
+favorite:true
 },
 
 {
+icon:"😘",
+title:"First Kiss",
 date:"2026-04-02",
-title:"😘 First Kiss",
-description:"First kiss"
+time:"",
+note:"A memory forever.",
+favorite:true
 }
 
 ];
 
-let timeline =
-JSON.parse(
-localStorage.getItem("timeline")
-);
+let editingIndex = -1;
 
-if(!timeline){
+// ============================
 
-timeline = defaultTimeline;
+function saveStorage(){
 
 localStorage.setItem(
-"timeline",
-JSON.stringify(timeline)
+"royalTimelineEvents",
+JSON.stringify(events)
 );
 
 }
 
-function saveTimeline(){
+// ============================
 
-localStorage.setItem(
-"timeline",
-JSON.stringify(timeline)
+function daysAgo(dateString){
+
+const eventDate =
+new Date(dateString);
+
+const today =
+new Date();
+
+const diff =
+today - eventDate;
+
+return Math.floor(
+diff /
+(1000*60*60*24)
 );
 
 }
 
-function addMemory(){
+// ============================
 
-const date =
-document.getElementById("memoryDate").value;
+function updateStats(){
 
-const title =
-document.getElementById("memoryTitle").value;
-
-const description =
-document.getElementById("memoryDescription").value;
-
-if(
-!date ||
-!title ||
-!description
-){
-alert("Fill all fields ❤️");
-return;
-}
-
-timeline.push({
-date,
-title,
-description
-});
-
-timeline.sort(
-(a,b)=>
-new Date(a.date)
--
-new Date(b.date)
-);
-
-saveTimeline();
-
-document.getElementById("memoryDate").value="";
-document.getElementById("memoryTitle").value="";
-document.getElementById("memoryDescription").value="";
-
-renderTimeline();
-
-}
-
-function deleteMemory(index){
-
-timeline.splice(index,1);
-
-saveTimeline();
-
-renderTimeline();
-
-}
-
-function renderTimeline(){
-
-const container =
 document.getElementById(
-"timelineContainer"
+"totalEvents"
+).innerText =
+events.length;
+
+const proposal =
+new Date("2022-08-02");
+
+const now =
+new Date();
+
+const diff =
+Math.floor(
+(now-proposal)/
+(1000*60*60*24)
 );
 
-container.innerHTML="";
+document.getElementById(
+"daysTogether"
+).innerText =
+diff;
 
-timeline.forEach(
-(item,index)=>{
+const favs =
+events.filter(
+e=>e.favorite
+).length;
 
-container.innerHTML += `
+document.getElementById(
+"favoriteCount"
+).innerText =
+favs;
 
-<div class="event">
+}
 
-<div class="event-date">
-${item.date}
-</div>
+// ============================
 
-<h2>
-${item.title}
-</h2>
+function renderHall(){
 
-<p>
-${item.description}
-</p>
+const hall =
+document.getElementById(
+"hallContainer"
+);
 
-<button
-class="delete-btn"
-onclick="deleteMemory(${index})">
+hall.innerHTML="";
 
-Delete
+events
+.filter(e=>e.favorite)
+.forEach(event=>{
 
-</button>
+hall.innerHTML += `
+
+<div class="hall-card">
+
+${event.icon}
+${event.title}
 
 </div>
 
@@ -195,5 +217,312 @@ Delete
 });
 
 }
+
+// ============================
+
+function renderTimeline(){
+
+const search =
+document.getElementById(
+"searchInput"
+).value.toLowerCase();
+
+events.sort(
+(a,b)=>
+new Date(a.date)
+-
+new Date(b.date)
+);
+
+const container =
+document.getElementById(
+"timelineContainer"
+);
+
+container.innerHTML="";
+
+let filtered =
+events.filter(event=>{
+
+return (
+
+event.title
+.toLowerCase()
+.includes(search)
+
+||
+
+event.note
+.toLowerCase()
+.includes(search)
+
+);
+
+});
+
+filtered.forEach(
+(event,index)=>{
+
+const position =
+index % 2 === 0
+? "top"
+: "bottom";
+
+container.innerHTML += `
+
+<div class="timeline-event ${position}">
+
+<div class="event-card">
+
+<h3>
+
+${event.icon}
+${event.title}
+
+</h3>
+
+<small>
+
+📅 ${event.date}
+
+${event.time
+? `<br>⏰ ${event.time}`
+: ""
+}
+
+</small>
+
+<p>
+
+${event.note}
+
+</p>
+
+<br>
+
+<strong>
+
+⏳ ${daysAgo(event.date)}
+ days ago
+
+</strong>
+
+<div class="actions">
+
+<button
+class="edit-btn"
+onclick="editEvent(${events.indexOf(event)})">
+
+Edit
+
+</button>
+
+<button
+class="delete-btn"
+onclick="deleteEvent(${events.indexOf(event)})">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+<div class="connector"></div>
+
+<div class="node"></div>
+
+</div>
+
+`;
+
+});
+
+updateStats();
+renderHall();
+
+}
+
+// ============================
+
+function saveEvent(){
+
+const icon =
+document.getElementById(
+"eventIcon"
+).value.trim();
+
+const title =
+document.getElementById(
+"eventTitle"
+).value.trim();
+
+const date =
+document.getElementById(
+"eventDate"
+).value;
+
+const time =
+document.getElementById(
+"eventTime"
+).value;
+
+const note =
+document.getElementById(
+"eventNote"
+).value.trim();
+
+const favorite =
+document.getElementById(
+"eventFavorite"
+).checked;
+
+if(
+!icon ||
+!title ||
+!date
+){
+
+alert(
+"Please fill required fields ❤️"
+);
+
+return;
+}
+
+const newEvent = {
+
+icon,
+title,
+date,
+time,
+note,
+favorite
+
+};
+
+if(editingIndex === -1){
+
+events.push(
+newEvent
+);
+
+}else{
+
+events[editingIndex] =
+newEvent;
+
+editingIndex = -1;
+
+}
+
+saveStorage();
+
+clearForm();
+
+renderTimeline();
+
+}
+
+// ============================
+
+function editEvent(index){
+
+const event =
+events[index];
+
+document.getElementById(
+"eventIcon"
+).value =
+event.icon;
+
+document.getElementById(
+"eventTitle"
+).value =
+event.title;
+
+document.getElementById(
+"eventDate"
+).value =
+event.date;
+
+document.getElementById(
+"eventTime"
+).value =
+event.time;
+
+document.getElementById(
+"eventNote"
+).value =
+event.note;
+
+document.getElementById(
+"eventFavorite"
+).checked =
+event.favorite;
+
+editingIndex =
+index;
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+// ============================
+
+function deleteEvent(index){
+
+if(
+!confirm(
+"Delete this memory?"
+)
+) return;
+
+events.splice(
+index,
+1
+);
+
+saveStorage();
+
+renderTimeline();
+
+}
+
+// ============================
+
+function clearForm(){
+
+document.getElementById(
+"eventIcon"
+).value="";
+
+document.getElementById(
+"eventTitle"
+).value="";
+
+document.getElementById(
+"eventDate"
+).value="";
+
+document.getElementById(
+"eventTime"
+).value="";
+
+document.getElementById(
+"eventNote"
+).value="";
+
+document.getElementById(
+"eventFavorite"
+).checked=false;
+
+}
+
+// ============================
 
 renderTimeline();
