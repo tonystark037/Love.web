@@ -1,61 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Our Journey ❤️</title>
 
 <link rel="stylesheet" href="timeline.css">
+
 </head>
 
 <body>
 
-<div class="stars"></div>
+<div id="stars"></div>
 
-<header>
+<nav>
 
-<a href="../index.html" class="home-btn">
-🏠 Home
-</a>
+<a href="../index.html">🏠 Home</a>
 
-<h1>📅 Our Journey ❤️</h1>
+</nav>
+
+<header class="hero">
+
+<h1>❤️ Our Journey ❤️</h1>
 
 <p>
-Every memory has a date.
-Every date has a story.
+Every memory is a milestone.
+Every milestone is a chapter.
 </p>
+
+<div class="stats">
+
+<div class="stat-box">
+<h2 id="totalEvents">0</h2>
+<p>Total Memories</p>
+</div>
+
+<div class="stat-box">
+<h2 id="daysTogether">0</h2>
+<p>Days Since Proposal</p>
+</div>
+
+<div class="stat-box">
+<h2 id="favoriteCount">0</h2>
+<p>Hall Of Memories</p>
+</div>
+
+</div>
 
 </header>
 
-<section class="memory-form">
+<section class="hall-section">
 
-<input
-type="date"
-id="memoryDate">
+<h2>⭐ Hall Of Memories ⭐</h2>
+
+<div id="hallContainer"></div>
+
+</section>
+
+<section class="controls">
 
 <input
 type="text"
-id="memoryTitle"
-placeholder="Memory Title">
+id="searchInput"
+placeholder="Search memories..."
+onkeyup="renderTimeline()">
+
+</section>
+
+<section class="event-form">
+
+<h2>Add New Memory ❤️</h2>
+
+<input
+type="text"
+id="eventIcon"
+placeholder="Icon (❤️ 🫂 😘 ☕ 💍)">
+
+<input
+type="text"
+id="eventTitle"
+placeholder="Event Title">
+
+<input
+type="date"
+id="eventDate">
+
+<input
+type="time"
+id="eventTime">
 
 <textarea
-id="memoryDescription"
-placeholder="Describe the memory...">
+id="eventNote"
+placeholder="Memory Note">
 </textarea>
 
-<button onclick="addMemory()">
-❤️ Add Memory
+<label class="favorite-label">
+
+<input
+type="checkbox"
+id="eventFavorite">
+
+⭐ Add To Hall Of Memories
+
+</label>
+
+<button onclick="saveEvent()">
+
+➕ Save Memory
+
 </button>
 
 </section>
 
-<section
-id="timelineContainer"
-class="timeline">
+<section class="timeline-wrapper">
+
+<div class="timeline-line"></div>
+
+<div id="timelineContainer">
+
+</div>
 
 </section>
 
 <script src="timeline.js"></script>
 
 </body>
+
 </html>
