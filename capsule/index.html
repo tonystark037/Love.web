@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Capsule 🌙</title>
+
+<link rel="stylesheet" href="capsule.css">
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<header>
+
+<a href="../index.html" class="home-btn">
+🏠 Home
+</a>
+
+<h1>🌙 Time Capsule ❤️</h1>
+
+<p>
+Messages for a future version of us.
+</p>
+
+</header>
+
+<section class="capsule-form">
+
+<input
+type="text"
+id="capsuleTitle"
+placeholder="Capsule Title">
+
+<input
+type="date"
+id="capsuleDate">
+
+<textarea
+id="capsuleMessage"
+placeholder="Write a message for the future...">
+</textarea>
+
+<button onclick="saveCapsule()">
+🌙 Lock Capsule
+</button>
+
+</section>
+
+<section
+id="capsuleContainer"
+class="capsule-grid">
+</section>
+
+<script src="capsule.js"></script>
+
+</body>
+</html>
