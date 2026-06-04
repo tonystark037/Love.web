@@ -196,7 +196,8 @@ hall_of_memory
 if(error){
 
 console.error(error);
-alert("Save failed");
+alert(JSON.stringify(error));
+console.error(error);
 
 return;
 
