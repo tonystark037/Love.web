@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gallery ❤️</title>
+
+<link rel="stylesheet" href="gallery.css">
+
+</head>
+
+<body>
+
+<header>
+
+<a href="../index.html" class="home-btn">
+🏠 Home
+</a>
+
+<h1>
+📸 Our Gallery ❤️
+</h1>
+
+<p>
+Every photo tells a story.
+</p>
+
+</header>
+
+<section class="upload-section">
+
+<input
+type="file"
+id="imageFile"
+accept="image/*">
+
+<input
+type="text"
+id="photoTitle"
+placeholder="Memory Title">
+
+<input
+type="date"
+id="photoDate">
+
+<textarea
+id="photoNote"
+placeholder="Memory Note">
+</textarea>
+
+<button onclick="uploadPhoto()">
+
+📸 Upload Memory
+
+</button>
+
+</section>
+
+<section
+id="galleryGrid"
+class="gallery-grid">
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="gallery.js"></script>
+
+</body>
+
+</html>
