@@ -1,416 +1,75 @@
-// ===========================
-// TIMELINE V5 ROYAL EDITION
-// ===========================
+const SUPABASE_URL =
+"https://zzmceyjguctywocofjun.supabase.co";
 
-let editingIndex = -1;
+const SUPABASE_KEY =
+"sb_publishable_bgGrGBdrGUAfsQiujIqNmg_-cF56igy";
 
-let events =
-JSON.parse(
-localStorage.getItem("royalTimelineEvents")
-) || [
-
-{
-icon:"❤️",
-title:"First Proposal",
-date:"2022-08-02",
-time:"12:45",
-note:"The day everything started.",
-favorite:true
-},
-
-{
-icon:"💬",
-title:"First Instagram Message",
-date:"2024-01-29",
-time:"22:30",
-note:"A simple message became a beautiful journey.",
-favorite:false
-},
-
-{
-icon:"☕",
-title:"First Date",
-date:"2025-01-15",
-time:"",
-note:"Met for the first time for 30 minutes.",
-favorite:true
-},
-
-{
-icon:"🙏",
-title:"Tuljapur Blessing",
-date:"2025-01-17",
-time:"",
-note:"God's blessing for our future.",
-favorite:false
-},
-
-{
-icon:"❤️",
-title:"Closeness Feeling",
-date:"2025-10-14",
-time:"",
-note:"She expressed her closeness feeling.",
-favorite:false
-},
-
-{
-icon:"☕",
-title:"Longest Date",
-date:"2025-11-03",
-time:"",
-note:"Our longest date together.",
-favorite:false
-},
-
-{
-icon:"🎁",
-title:"Surprise Date",
-date:"2025-11-27",
-time:"",
-note:"An unexpected beautiful day.",
-favorite:false
-},
-
-{
-icon:"🫂",
-title:"First Virtual Hug",
-date:"2026-01-28",
-time:"",
-note:"A virtual hug filled with emotions.",
-favorite:false
-},
-
-{
-icon:"😘",
-title:"First Virtual Kiss",
-date:"2026-02-14",
-time:"",
-note:"Valentine's Day memory.",
-favorite:false
-},
-
-{
-icon:"🫂",
-title:"First Hug",
-date:"2026-03-09",
-time:"",
-note:"One of the happiest moments.",
-favorite:true
-},
-
-{
-icon:"💍",
-title:"She Said Yes",
-date:"2026-03-21",
-time:"",
-note:"A dream became reality.",
-favorite:true
-},
-
-{
-icon:"😘",
-title:"First Kiss",
-date:"2026-04-02",
-time:"",
-note:"A memory forever.",
-favorite:true
-}
-
-];
-
-// ===========================
-
-function saveStorage(){
-
-localStorage.setItem(
-"royalTimelineEvents",
-JSON.stringify(events)
+const db =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
+let events = [];
+let editingId = null;
+
+/* LOAD EVENTS */
+
+async function loadEvents(){
+
+const { data, error } =
+await db
+.from("timeline_events")
+.select("*")
+.order(
+"event_date",
+{
+ascending:true
 }
-
-// ===========================
-
-function daysAgo(date){
-
-const eventDate =
-new Date(date);
-
-const today =
-new Date();
-
-const diff =
-today - eventDate;
-
-return Math.floor(
-diff /
-(1000 * 60 * 60 * 24)
 );
 
-}
+if(error){
 
-// ===========================
+console.error(error);
 
-function updateStats(){
-
-document.getElementById(
-"totalEvents"
-).innerText =
-events.length;
-
-const proposalDate =
-new Date("2022-08-02");
-
-const today =
-new Date();
-
-const diff =
-Math.floor(
-(today - proposalDate)
-/
-(1000*60*60*24)
-);
-
-document.getElementById(
-"daysTogether"
-).innerText =
-diff;
-
-const favCount =
-events.filter(
-e => e.favorite
-).length;
-
-document.getElementById(
-"favoriteCount"
-).innerText =
-favCount;
+return;
 
 }
 
-// ===========================
+events = data || [];
 
-function renderHall(){
-
-const hall =
-document.getElementById(
-"hallContainer"
-);
-
-hall.innerHTML = "";
-
-events
-.filter(
-e => e.favorite
-)
-.forEach(event => {
-
-hall.innerHTML += `
-
-<div class="hall-card">
-
-${event.icon}
-${event.title}
-
-</div>
-
-`;
-
-});
+renderEvents();
 
 }
 
-// ===========================
+/* SAVE EVENT */
 
-function toggleDetails(index){
+async function saveEvent(){
 
-const details =
+const event_date =
 document.getElementById(
-`details-${index}`
-);
-
-if(details.style.display === "block"){
-
-details.style.display = "none";
-
-}else{
-
-details.style.display = "block";
-
-}
-
-}
-
-// ===========================
-
-function renderTimeline(){
-
-const container =
-document.getElementById(
-"timelineContainer"
-);
-
-const search =
-document.getElementById(
-"searchInput"
-).value.toLowerCase();
-
-container.innerHTML = "";
-
-events.sort(
-(a,b)=>
-new Date(a.date)
--
-new Date(b.date)
-);
-
-const filtered =
-events.filter(event =>
-
-event.title
-.toLowerCase()
-.includes(search)
-
-||
-
-event.note
-.toLowerCase()
-.includes(search)
-
-);
-
-filtered.forEach(
-(event,index)=>{
-
-container.innerHTML += `
-
-<div class="timeline-event">
-
-<div class="connector"></div>
-
-<div class="node"></div>
-
-<div
-class="event-card"
-onclick="toggleDetails(${index})">
-
-<h3>
-
-${event.icon}
-${event.title}
-
-</h3>
-
-<small>
-
-📅 ${event.date}
-
-</small>
-
-<div
-class="event-details"
-id="details-${index}">
-
-<br>
-
-${event.time
-?
-`<p>⏰ ${event.time}</p>`
-:
-""
-}
-
-<br>
-
-<p>
-
-${event.note}
-
-</p>
-
-<br>
-
-<strong>
-
-⏳ ${daysAgo(event.date)}
- days ago
-
-</strong>
-
-<div class="actions">
-
-<button
-class="edit-btn"
-onclick="event.stopPropagation();editEvent(${events.indexOf(event)})">
-
-Edit
-
-</button>
-
-<button
-class="delete-btn"
-onclick="event.stopPropagation();deleteEvent(${events.indexOf(event)})">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-updateStats();
-renderHall();
-
-}
-
-// ===========================
-
-function saveEvent(){
-
-const icon =
-document.getElementById(
-"eventIcon"
-).value.trim();
+"eventDate"
+).value;
 
 const title =
 document.getElementById(
 "eventTitle"
 ).value.trim();
 
-const date =
+const short_text =
 document.getElementById(
-"eventDate"
-).value;
-
-const time =
-document.getElementById(
-"eventTime"
-).value;
+"eventShort"
+).value.trim();
 
 const note =
 document.getElementById(
 "eventNote"
 ).value.trim();
 
-const favorite =
-document.getElementById(
-"eventFavorite"
-).checked;
-
 if(
-!icon ||
+!event_date ||
 !title ||
-!date
+!short_text
 ){
 
 alert(
@@ -421,79 +80,149 @@ return;
 
 }
 
-const newEvent = {
+if(editingId){
 
-icon,
+const { error } =
+await db
+.from("timeline_events")
+.update({
+
+event_date,
 title,
-date,
-time,
-note,
-favorite
+short_text,
+note
 
-};
-
-if(editingIndex === -1){
-
-events.push(
-newEvent
+})
+.eq(
+"id",
+editingId
 );
+
+if(error){
+
+console.error(error);
+
+alert(
+"Update failed"
+);
+
+return;
+
+}
+
+editingId = null;
 
 }else{
 
-events[editingIndex] =
-newEvent;
+const { error } =
+await db
+.from("timeline_events")
+.insert([{
 
-editingIndex = -1;
+event_date,
+title,
+short_text,
+note
+
+}]);
+
+if(error){
+
+console.error(error);
+
+alert(
+"Save failed"
+);
+
+return;
 
 }
 
-saveStorage();
-
-clearForm();
-
-renderTimeline();
-
 }
-
-// ===========================
-
-function editEvent(index){
-
-const event =
-events[index];
 
 document.getElementById(
-"eventIcon"
-).value =
-event.icon;
+"eventDate"
+).value = "";
 
 document.getElementById(
 "eventTitle"
-).value =
-event.title;
+).value = "";
+
+document.getElementById(
+"eventShort"
+).value = "";
+
+document.getElementById(
+"eventNote"
+).value = "";
+
+await loadEvents();
+
+}
+
+/* DELETE */
+
+async function deleteEvent(id){
+
+if(
+!confirm(
+"Delete this event?"
+)
+)return;
+
+const { error } =
+await db
+.from("timeline_events")
+.delete()
+.eq(
+"id",
+id
+);
+
+if(error){
+
+console.error(error);
+
+return;
+
+}
+
+await loadEvents();
+
+}
+
+/* EDIT */
+
+function editEvent(id){
+
+const ev =
+events.find(
+e => e.id === id
+);
+
+if(!ev)return;
 
 document.getElementById(
 "eventDate"
 ).value =
-event.date;
+ev.event_date;
 
 document.getElementById(
-"eventTime"
+"eventTitle"
 ).value =
-event.time;
+ev.title;
+
+document.getElementById(
+"eventShort"
+).value =
+ev.short_text;
 
 document.getElementById(
 "eventNote"
 ).value =
-event.note;
+ev.note || "";
 
-document.getElementById(
-"eventFavorite"
-).checked =
-event.favorite;
-
-editingIndex =
-index;
+editingId = id;
 
 window.scrollTo({
 
@@ -505,61 +234,133 @@ behavior:"smooth"
 
 }
 
-// ===========================
+/* EXPAND CARD */
 
-function deleteEvent(index){
+function toggleCard(card){
 
-if(
-!confirm(
-"Delete this memory?"
-)
-){
-
-return;
-
-}
-
-events.splice(
-index,
-1
+card.classList.toggle(
+"active"
 );
 
-saveStorage();
+}
 
-renderTimeline();
+/* RENDER */
+
+function renderEvents(){
+
+const container =
+document.getElementById(
+"timelineContainer"
+);
+
+const search =
+document.getElementById(
+"searchBox"
+)
+.value
+.toLowerCase();
+
+container.innerHTML = "";
+
+events.forEach(ev => {
+
+const content =
+(
+(ev.title || "") +
+" " +
+(ev.short_text || "") +
+" " +
+(ev.note || "")
+)
+.toLowerCase();
+
+if(
+!content.includes(search)
+)return;
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"timeline-card";
+
+card.innerHTML = `
+
+<div class="event-date">
+
+${new Date(
+ev.event_date
+).toLocaleDateString()}
+
+</div>
+
+<div class="event-title">
+
+${ev.title}
+
+</div>
+
+<div class="event-story">
+
+${ev.short_text}
+
+</div>
+
+<div class="details">
+
+<div class="event-note">
+
+${ev.note || "No note added"}
+
+</div>
+
+<div class="card-actions">
+
+<button
+class="edit-btn"
+onclick="
+event.stopPropagation();
+editEvent('${ev.id}')
+">
+
+Edit
+
+</button>
+
+<button
+class="delete-btn"
+onclick="
+event.stopPropagation();
+deleteEvent('${ev.id}')
+">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+card.onclick =
+function(){
+
+toggleCard(card);
+
+};
+
+container.appendChild(
+card
+);
+
+});
 
 }
 
-// ===========================
+/* START */
 
-function clearForm(){
-
-document.getElementById(
-"eventIcon"
-).value = "";
-
-document.getElementById(
-"eventTitle"
-).value = "";
-
-document.getElementById(
-"eventDate"
-).value = "";
-
-document.getElementById(
-"eventTime"
-).value = "";
-
-document.getElementById(
-"eventNote"
-).value = "";
-
-document.getElementById(
-"eventFavorite"
-).checked = false;
-
-}
-
-// ===========================
-
-renderTimeline();
+loadEvents();
