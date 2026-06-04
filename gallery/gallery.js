@@ -72,7 +72,7 @@ file.name.replaceAll(
 const {
 error: uploadError
 } = await db.storage
-.from("gallery")
+.from("GALLERY")
 .upload(
 fileName,
 file
@@ -97,7 +97,7 @@ return;
 const {
 data
 } = db.storage
-.from("gallery")
+.from("GALLERY")
 .getPublicUrl(
 fileName
 );
@@ -110,7 +110,7 @@ data.publicUrl;
 const {
 error
 } = await db
-.from("gallery")
+.from("GALLERY")
 .insert([{
 
 title,
@@ -168,7 +168,7 @@ const {
 data,
 error
 } = await db
-.from("gallery")
+.from("GALLERY")
 .select("*")
 .order(
 "created_at",
@@ -256,7 +256,7 @@ if(
 const {
 error
 } = await db
-.from("gallery")
+.from("GALLERY")
 .delete()
 .eq(
 "id",
