@@ -4,180 +4,81 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<title>Timeline ❤️</title>
 
-<title>❤️ Our Journey ❤️</title>
-
-<link rel="stylesheet"
-href="timeline.css">
+<link rel="stylesheet" href="timeline.css">
 
 </head>
 
 <body>
 
-<div id="stars"></div>
+<header>
 
-<!-- NAV -->
-
-<nav>
-
-<a href="../index.html">
+<a href="../index.html" class="home-btn">
 🏠 Home
 </a>
 
-</nav>
-
-<!-- HERO -->
-
-<section class="hero">
-
-<h1>
-❤️ Our Journey ❤️
-</h1>
+<h1>📅 Our Timeline ❤️</h1>
 
 <p>
-
-Every memory tells a story.
-Every story deserves forever.
-
+Every moment has a story.
 </p>
 
-</section>
+</header>
 
-<!-- STATS -->
-
-<section class="stats-section">
-
-<div class="stat-card">
-
-<h2 id="totalEvents">
-0
-</h2>
-
-<p>
-Total Memories
-</p>
-
-</div>
-
-<div class="stat-card">
-
-<h2 id="daysTogether">
-0
-</h2>
-
-<p>
-Days Since Proposal
-</p>
-
-</div>
-
-<div class="stat-card">
-
-<h2 id="favoriteCount">
-0
-</h2>
-
-<p>
-Hall Of Memories
-</p>
-
-</div>
-
-</section>
-
-<!-- HALL OF MEMORIES -->
-
-<section class="hall-section">
-
-<h2>
-⭐ Hall Of Memories ⭐
-</h2>
-
-<div id="hallContainer">
-
-</div>
-
-</section>
-
-<!-- SEARCH -->
-
-<section class="search-section">
+<section class="controls">
 
 <input
 type="text"
-id="searchInput"
-placeholder="Search memories..."
-onkeyup="renderTimeline()">
+id="searchBox"
+placeholder="Search timeline..."
+oninput="renderEvents()">
 
 </section>
 
-<!-- ADD EVENT -->
-
-<section class="form-section">
-
-<h2>
-➕ Add New Memory
-</h2>
-
-<input
-type="text"
-id="eventIcon"
-placeholder="Icon ❤️ 🫂 😘 ☕">
-
-<input
-type="text"
-id="eventTitle"
-placeholder="Event Title">
+<section class="event-form">
 
 <input
 type="date"
 id="eventDate">
 
 <input
-type="time"
-id="eventTime">
+type="text"
+id="eventTitle"
+placeholder="Event Title">
+
+<textarea
+id="eventShort"
+placeholder="Short Story">
+</textarea>
 
 <textarea
 id="eventNote"
-placeholder="Write memory note...">
+placeholder="Personal Note">
 </textarea>
 
-<label class="favorite-label">
-
-<input
-type="checkbox"
-id="eventFavorite">
-
-⭐ Add To Hall Of Memories
-
-</label>
-
-<button
-onclick="saveEvent()">
-
-Save Memory ❤️
-
+<button onclick="saveEvent()">
+✨ Save Event
 </button>
 
 </section>
-
-<!-- TIMELINE -->
 
 <section class="timeline-wrapper">
 
 <div class="timeline-line"></div>
 
-<div id="timelineContainer">
-
+<div
+id="timelineContainer"
+class="timeline-container">
 </div>
 
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="timeline.js"></script>
 
 </body>
-
 </html>
