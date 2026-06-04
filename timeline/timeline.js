@@ -13,29 +13,33 @@ SUPABASE_KEY
 let events = [];
 let editingId = null;
 
-/* =========================
+/* ==========================
    LOVE COUNTERS
-========================= */
+========================== */
 
-const PROPOSAL_DATE = "2025-01-17";
+const PROPOSAL_DATE = "2022-07-02";
 const YES_DATE = "2026-03-21";
-const HUG_DATE = "2026-03-09";
+const HUG_DATE = "2026-03-21";
 const KISS_DATE = "2026-04-02";
 
-function updateCounter(elementId, dateString){
+function updateCounter(id, date){
 
-const start = new Date(dateString);
+const start = new Date(date);
 const now = new Date();
 
-const diff = now - start;
+const diff =
+Math.floor(
+(now - start) /
+(1000 * 60 * 60 * 24)
+);
 
-const days =
-Math.floor(diff / (1000*60*60*24));
+const el =
+document.getElementById(id);
 
-document.getElementById(
-elementId
-).innerText =
-days + " Days";
+if(el){
+el.innerText = diff + " Days";
+}
+
 }
 
 function updateLoveCounters(){
@@ -67,9 +71,9 @@ updateLoveCounters,
 1000
 );
 
-/* =========================
+/* ==========================
    LOAD EVENTS
-========================= */
+========================== */
 
 async function loadEvents(){
 
@@ -87,6 +91,8 @@ ascending:true
 if(error){
 
 console.error(error);
+alert("Failed to load events");
+
 return;
 
 }
@@ -97,9 +103,9 @@ renderEvents();
 
 }
 
-/* =========================
+/* ==========================
    SAVE EVENT
-========================= */
+========================== */
 
 async function saveEvent(){
 
@@ -164,10 +170,7 @@ editingId
 if(error){
 
 console.error(error);
-
-alert(
-"Update failed"
-);
+alert("Update failed");
 
 return;
 
@@ -193,10 +196,7 @@ hall_of_memory
 if(error){
 
 console.error(error);
-
-alert(
-"Save failed"
-);
+alert("Save failed");
 
 return;
 
@@ -228,9 +228,9 @@ await loadEvents();
 
 }
 
-/* =========================
-   DELETE EVENT
-========================= */
+/* ==========================
+   DELETE
+========================== */
 
 async function deleteEvent(id){
 
@@ -261,9 +261,9 @@ await loadEvents();
 
 }
 
-/* =========================
-   EDIT EVENT
-========================= */
+/* ==========================
+   EDIT
+========================== */
 
 function editEvent(id){
 
@@ -272,7 +272,7 @@ events.find(
 e => e.id === id
 );
 
-if(!ev)return;
+if(!ev) return;
 
 document.getElementById(
 "eventDate"
@@ -311,21 +311,9 @@ behavior:"smooth"
 
 }
 
-/* =========================
-   EXPAND CARD
-========================= */
-
-function toggleCard(card){
-
-card.classList.toggle(
-"active"
-);
-
-}
-
-/* =========================
+/* ==========================
    HALL OF MEMORIES
-========================= */
+========================== */
 
 function renderHallOfMemories(){
 
@@ -348,9 +336,7 @@ container.innerHTML += `
 
 <div class="memory-card">
 
-<h3>
-${ev.title}
-</h3>
+<h3>${ev.title}</h3>
 
 <p>
 ${new Date(
@@ -366,9 +352,9 @@ ev.event_date
 
 }
 
-/* =========================
-   RENDER EVENTS
-========================= */
+/* ==========================
+   TIMELINE
+========================== */
 
 function renderEvents(){
 
@@ -472,13 +458,6 @@ Delete
 
 `;
 
-card.onclick =
-function(){
-
-toggleCard(card);
-
-};
-
 container.appendChild(
 card
 );
@@ -487,9 +466,9 @@ card
 
 }
 
-/* =========================
+/* ==========================
    START
-========================= */
+========================== */
 
 updateLoveCounters();
 loadEvents();
