@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Timeline ❤️</title>
+<title>Atharva ❤️ Praniti | Our Story</title>
 
 <link rel="stylesheet" href="timeline.css">
 
@@ -14,42 +14,212 @@
 
 <body>
 
-<header>
+<!-- LOADING SCREEN -->
 
-<a href="../index.html" class="home-btn">
-🏠 Home
-</a>
+<div id="loader">
 
-<h1>📅 Our Timeline ❤️</h1>
+<div class="loader-content">
+
+<h1>
+❤️ Atharva & Praniti ❤️
+</h1>
 
 <p>
-Every moment has a story.
+Loading Our Story...
 </p>
 
-</header>
+<div class="loader-hearts">
+❤️ ❤️ ❤️
+</div>
+
+</div>
+
+</div>
+
+<!-- FLOATING BACKGROUND -->
+
+<div class="stars"></div>
+
+<div id="heartContainer"></div>
+
+<!-- HERO -->
+
+<section class="hero-section">
+
+<h1 class="hero-title">
+
+ATHARVA ❤️ PRANITI
+
+</h1>
+
+<p class="hero-text">
+
+Every memory has a heartbeat.<br>
+Every heartbeat became a chapter.<br>
+Every chapter became our story.
+
+</p>
+
+<div class="hero-date">
+
+02 Aug 2022 → Forever ♾️
+
+</div>
+
+</section>
 
 <!-- LOVE COUNTERS -->
 
 <section class="love-counters">
 
 <div class="counter-card">
-<h3>💍 Proposal</h3>
-<div id="proposalCounter">0 Days</div>
+
+<h3>💍 Since Proposal</h3>
+
+<div
+id="proposalCounter"
+class="counter-value">
+
+0 Days
+
+</div>
+
+<p>
+The day everything began.
+</p>
+
 </div>
 
 <div class="counter-card">
-<h3>❤️ Said Yes</h3>
-<div id="yesCounter">0 Days</div>
+
+<h3>❤️ Since She Said Yes</h3>
+
+<div
+id="yesCounter"
+class="counter-value">
+
+0 Days
+
+</div>
+
+<p>
+A dream became reality.
+</p>
+
 </div>
 
 <div class="counter-card">
-<h3>🤗 First Hug</h3>
-<div id="hugCounter">0 Days</div>
+
+<h3>🤗 Since First Hug</h3>
+
+<div
+id="hugCounter"
+class="counter-value">
+
+0 Days
+
+</div>
+
+<p>
+The warmest feeling.
+</p>
+
 </div>
 
 <div class="counter-card">
-<h3>💋 First Kiss</h3>
-<div id="kissCounter">0 Days</div>
+
+<h3>💋 Since First Kiss</h3>
+
+<div
+id="kissCounter"
+class="counter-value">
+
+0 Days
+
+</div>
+
+<p>
+A moment frozen in time.
+</p>
+
+</div>
+
+</section>
+
+<!-- RELATIONSHIP STATS -->
+
+<section class="stats-section">
+
+<h2>
+📊 Our Story In Numbers
+</h2>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<div
+class="stat-number"
+id="totalEvents">
+
+0
+
+</div>
+
+<p>
+Chapters Written
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<div
+class="stat-number"
+id="memoryCount">
+
+0
+
+</div>
+
+<p>
+Hall Memories
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<div
+class="stat-number"
+id="milestoneCount">
+
+0
+
+</div>
+
+<p>
+Milestones
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<div
+class="stat-number"
+id="daysTogether">
+
+0
+
+</div>
+
+<p>
+Days Since Proposal
+</p>
+
+</div>
+
 </div>
 
 </section>
@@ -61,7 +231,7 @@ Every moment has a story.
 <input
 type="text"
 id="searchBox"
-placeholder="Search timeline..."
+placeholder="Search our story..."
 oninput="renderEvents()">
 
 </section>
@@ -70,6 +240,10 @@ oninput="renderEvents()">
 
 <section class="event-form">
 
+<h2>
+✨ Add New Chapter
+</h2>
+
 <input
 type="date"
 id="eventDate">
@@ -77,11 +251,11 @@ id="eventDate">
 <input
 type="text"
 id="eventTitle"
-placeholder="Event Title">
+placeholder="Chapter Title">
 
 <textarea
 id="eventShort"
-placeholder="Short Story">
+placeholder="Story">
 </textarea>
 
 <textarea
@@ -100,7 +274,9 @@ id="hallMemory">
 </label>
 
 <button onclick="saveEvent()">
-✨ Save Event
+
+✨ Save Chapter
+
 </button>
 
 </section>
@@ -110,8 +286,16 @@ id="hallMemory">
 <section class="hall-section">
 
 <h2>
-🏛️ Hall of Memories
+
+🏛️ Hall Of Memories
+
 </h2>
+
+<p class="hall-subtitle">
+
+The moments that changed everything.
+
+</p>
 
 <div
 id="hallContainer"
@@ -122,7 +306,15 @@ class="hall-grid">
 
 <!-- TIMELINE -->
 
-<section class="timeline-wrapper">
+<section class="timeline-section">
+
+<h2>
+
+📖 Chapters Of Our Story
+
+</h2>
+
+<div class="timeline-wrapper">
 
 <div class="timeline-line"></div>
 
@@ -131,7 +323,35 @@ id="timelineContainer"
 class="timeline-container">
 </div>
 
+</div>
+
 </section>
+
+<!-- FOOTER -->
+
+<footer class="story-footer">
+
+<h2>
+
+✨ To Be Continued...
+
+</h2>
+
+<p>
+
+More memories.
+More adventures.
+More chapters.
+
+</p>
+
+<p>
+
+Forever ❤️
+
+</p>
+
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
