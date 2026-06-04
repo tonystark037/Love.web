@@ -35,7 +35,10 @@ side
 if(error){
 
 console.error(error);
-alert("Save failed");
+
+alert(
+JSON.stringify(error)
+);
 
 }else{
 
