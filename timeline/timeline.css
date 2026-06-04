@@ -1,429 +1,211 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
-}
+/* ===================================
+   GLOBAL BACKGROUND
+=================================== */
 
 body{
 
 background:
-linear-gradient(
-135deg,
-#050816,
-#0f1735,
-#050816
+radial-gradient(
+circle at top,
+#2b0d26,
+#13071a 40%,
+#050816 100%
 );
 
 color:white;
 
-min-height:100vh;
-
 overflow-x:hidden;
 
-padding-bottom:50px;
+min-height:100vh;
 
 }
 
-/* HEADER */
+/* ===================================
+   STARS
+=================================== */
 
-header{
+.stars{
 
-text-align:center;
+position:fixed;
 
-padding:40px 20px;
-
-}
-
-header h1{
-
-font-size:3rem;
-
-margin:15px 0;
-
-}
-
-header p{
-
-opacity:.8;
-
-}
-
-/* HOME BUTTON */
-
-.home-btn{
-
-display:inline-block;
-
-padding:12px 20px;
-
-border-radius:15px;
-
-text-decoration:none;
-
-color:white;
-
-background:
-rgba(255,255,255,.08);
-
-backdrop-filter:blur(10px);
-
-}
-
-/* SEARCH */
-
-.controls{
-
-max-width:1000px;
-
-margin:20px auto;
-
-padding:0 20px;
-
-}
-
-.controls input{
+top:0;
+left:0;
 
 width:100%;
+height:100%;
 
-padding:15px;
+background-image:
+radial-gradient(
+rgba(255,255,255,.9) 1px,
+transparent 1px
+);
 
-border:none;
+background-size:
+50px 50px;
 
-border-radius:15px;
+opacity:.2;
 
-font-size:1rem;
+pointer-events:none;
+
+z-index:-3;
 
 }
 
-/* EVENT FORM */
+/* ===================================
+   LOADER
+=================================== */
 
-.event-form{
+#loader{
 
-max-width:1000px;
+position:fixed;
 
-margin:30px auto;
+top:0;
+left:0;
 
-padding:25px;
+width:100%;
+height:100%;
 
 display:flex;
 
-flex-direction:column;
-
-gap:15px;
+justify-content:center;
+align-items:center;
 
 background:
-rgba(255,255,255,.08);
+linear-gradient(
+180deg,
+#1a0821,
+#050816
+);
 
-backdrop-filter:blur(15px);
+z-index:9999;
 
-border-radius:25px;
-
-}
-
-.event-form input,
-.event-form textarea{
-
-padding:15px;
-
-border:none;
-
-border-radius:15px;
-
-font-size:1rem;
+transition:1s;
 
 }
 
-.event-form textarea{
+.loader-content{
 
-height:120px;
-
-resize:vertical;
+text-align:center;
 
 }
 
-.event-form button{
+.loader-content h1{
 
-padding:15px;
+font-size:3rem;
 
-border:none;
+margin-bottom:15px;
 
-border-radius:15px;
+color:#ffd6f6;
 
-cursor:pointer;
+}
 
-font-size:1rem;
+.loader-content p{
 
-font-weight:bold;
+font-size:1.2rem;
+
+opacity:.85;
+
+}
+
+.loader-hearts{
+
+margin-top:25px;
+
+font-size:2rem;
+
+animation:
+pulse 1.2s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.2);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+/* ===================================
+   HERO
+=================================== */
+
+.hero-section{
+
+text-align:center;
+
+padding:
+120px 20px
+80px;
+
+max-width:1000px;
+
+margin:auto;
+
+}
+
+.hero-title{
+
+font-size:4rem;
 
 background:
 linear-gradient(
 45deg,
-#ffd700,
-#ffb300
-);
-
-color:black;
-
-}
-
-/* TIMELINE */
-
-.timeline-wrapper{
-
-position:relative;
-
-width:100%;
-
-overflow-x:auto;
-
-padding:100px 40px;
-
-}
-
-/* FULL GOLDEN LINE */
-
-.timeline-line{
-
-position:absolute;
-
-top:150px;
-
-left:0;
-
-width:100%;
-
-height:6px;
-
-background:
-linear-gradient(
-90deg,
-#ffd700,
-#ffea70,
+#ffd6f6,
+#ff7ac8,
 #ffd700
 );
 
-box-shadow:
-0 0 20px #ffd700;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 
-border-radius:10px;
-
-}
-
-/* EVENTS ROW */
-
-.timeline-container{
-
-display:flex;
-
-gap:30px;
-
-align-items:flex-start;
-
-min-width:max-content;
-
-padding:0 40px;
-
-position:relative;
-
-z-index:2;
+margin-bottom:20px;
 
 }
 
-/* EVENT CARD */
+.hero-text{
 
-.timeline-card{
+font-size:1.25rem;
 
-width:260px;
+line-height:2;
+
+opacity:.9;
+
+margin-bottom:30px;
+
+}
+
+.hero-date{
+
+display:inline-block;
+
+padding:
+15px 30px;
+
+border-radius:50px;
 
 background:
 rgba(255,255,255,.08);
 
-backdrop-filter:blur(15px);
-
-border-radius:20px;
-
-padding:18px;
-
-cursor:pointer;
-
-transition:.4s;
+backdrop-filter:
+blur(15px);
 
 border:
-1px solid rgba(255,255,255,.08);
-
-position:relative;
-
-margin-bottom:60px;
+1px solid rgba(255,255,255,.1);
 
 }
 
-/* GOLDEN DOT */
-
-.timeline-card::after{
-
-content:"";
-
-position:absolute;
-
-width:18px;
-
-height:18px;
-
-border-radius:50%;
-
-background:#ffd700;
-
-box-shadow:
-0 0 15px #ffd700;
-
-left:50%;
-
-transform:translateX(-50%);
-
-bottom:-72px;
-
-}
-
-/* SMALL MODE */
-
-.timeline-card .details{
-
-display:none;
-
-}
-
-/* EXPANDED */
-
-.timeline-card.active{
-
-transform:
-scale(1.05);
-
-box-shadow:
-0 0 30px rgba(255,215,0,.4);
-
-}
-
-.timeline-card.active .details{
-
-display:block;
-
-margin-top:15px;
-
-}
-
-/* CONTENT */
-
-.event-date{
-
-font-size:.85rem;
-
-opacity:.7;
-
-margin-bottom:8px;
-
-}
-
-.event-title{
-
-font-size:1.2rem;
-
-font-weight:bold;
-
-color:#ffd700;
-
-margin-bottom:10px;
-
-}
-
-.event-story{
-
-line-height:1.5;
-
-}
-
-.event-note{
-
-margin-top:15px;
-
-padding:12px;
-
-border-radius:12px;
-
-background:
-rgba(255,215,0,.1);
-
-border:
-1px solid rgba(255,215,0,.2);
-
-}
-
-/* ACTIONS */
-
-.card-actions{
-
-display:flex;
-
-gap:10px;
-
-margin-top:15px;
-
-}
-
-.edit-btn,
-.delete-btn{
-
-padding:10px 15px;
-
-border:none;
-
-border-radius:10px;
-
-cursor:pointer;
-
-color:white;
-
-}
-
-.edit-btn{
-
-background:#4f8cff;
-
-}
-
-.delete-btn{
-
-background:#ff5c5c;
-
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-header h1{
-
-font-size:2rem;
-
-}
-
-.timeline-card{
-
-width:220px;
-
-}
-
-.timeline-wrapper{
-
-padding:80px 20px;
-
-}
-
-}
-/* =========================
+/* ===================================
    LOVE COUNTERS
-========================= */
+=================================== */
 
 .love-counters{
 
@@ -436,9 +218,9 @@ padding:0 20px;
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(220px,1fr));
+repeat(auto-fit,minmax(250px,1fr));
 
-gap:20px;
+gap:25px;
 
 }
 
@@ -448,10 +230,10 @@ background:
 rgba(255,255,255,.08);
 
 backdrop-filter:
-blur(15px);
+blur(18px);
 
 border:
-1px solid rgba(255,255,255,.08);
+1px solid rgba(255,255,255,.1);
 
 border-radius:25px;
 
@@ -459,92 +241,175 @@ padding:25px;
 
 text-align:center;
 
-transition:.3s;
+transition:.4s;
 
 }
 
 .counter-card:hover{
 
 transform:
-translateY(-5px);
+translateY(-8px);
 
 box-shadow:
-0 0 25px rgba(255,215,0,.25);
+0 0 35px rgba(255,122,200,.35);
 
 }
 
 .counter-card h3{
 
-margin-bottom:12px;
+margin-bottom:15px;
+
+color:#ffd6f6;
+
+}
+
+.counter-value{
+
+font-size:2rem;
+
+font-weight:bold;
+
+margin-bottom:10px;
 
 color:#ffd700;
 
 }
 
-.counter-card div{
+/* ===================================
+   STATS
+=================================== */
 
-font-size:1.4rem;
-
-font-weight:bold;
-
-}
-
-/* =========================
-   MEMORY CHECKBOX
-========================= */
-
-.memory-check{
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-font-size:1rem;
-
-padding:10px;
-
-background:
-rgba(255,215,0,.08);
-
-border-radius:12px;
-
-}
-
-.memory-check input{
-
-width:20px;
-
-height:20px;
-
-cursor:pointer;
-
-}
-
-/* =========================
-   HALL OF MEMORIES
-========================= */
-
-.hall-section{
+.stats-section{
 
 max-width:1400px;
 
-margin:50px auto;
+margin:70px auto;
 
 padding:0 20px;
 
+text-align:center;
+
 }
 
-.hall-section h2{
-
-text-align:center;
+.stats-section h2{
 
 margin-bottom:30px;
 
 font-size:2rem;
 
+color:#ffd6f6;
+
+}
+
+.stats-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+}
+
+.stat-card{
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(15px);
+
+padding:25px;
+
+border-radius:25px;
+
+transition:.3s;
+
+}
+
+.stat-card:hover{
+
+transform:
+translateY(-6px);
+
+}
+
+.stat-number{
+
+font-size:2.5rem;
+
+font-weight:bold;
+
 color:#ffd700;
+
+margin-bottom:10px;
+
+}
+
+/* ===================================
+   FORM
+=================================== */
+
+.event-form{
+
+max-width:900px;
+
+margin:60px auto;
+
+padding:30px;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(18px);
+
+border-radius:25px;
+
+}
+
+.event-form h2{
+
+text-align:center;
+
+margin-bottom:25px;
+
+color:#ffd6f6;
+
+}
+
+/* ===================================
+   HALL OF MEMORIES
+=================================== */
+
+.hall-section{
+
+max-width:1400px;
+
+margin:80px auto;
+
+padding:0 20px;
+
+text-align:center;
+
+}
+
+.hall-section h2{
+
+font-size:2.5rem;
+
+margin-bottom:10px;
+
+color:#ffd700;
+
+}
+
+.hall-subtitle{
+
+margin-bottom:40px;
+
+opacity:.75;
 
 }
 
@@ -555,7 +420,7 @@ display:grid;
 grid-template-columns:
 repeat(auto-fit,minmax(250px,1fr));
 
-gap:25px;
+gap:30px;
 
 }
 
@@ -565,28 +430,29 @@ background:
 rgba(255,255,255,.08);
 
 backdrop-filter:
-blur(15px);
+blur(18px);
 
-padding:25px;
+padding:30px;
 
-border-radius:20px;
+border-radius:25px;
 
-border:
-1px solid rgba(255,255,255,.08);
+cursor:pointer;
 
 transition:.4s;
 
-cursor:pointer;
+border:
+1px solid rgba(255,255,255,.08);
 
 }
 
 .memory-card:hover{
 
 transform:
-translateY(-8px);
+translateY(-10px)
+scale(1.03);
 
 box-shadow:
-0 0 25px rgba(255,215,0,.35);
+0 0 35px rgba(255,215,0,.35);
 
 }
 
@@ -598,27 +464,142 @@ margin-bottom:10px;
 
 }
 
-.memory-card p{
+/* ===================================
+   TIMELINE
+=================================== */
+
+.timeline-section{
+
+max-width:1600px;
+
+margin:auto;
+
+padding:40px 20px;
+
+}
+
+.timeline-section h2{
+
+text-align:center;
+
+font-size:2.5rem;
+
+margin-bottom:50px;
+
+color:#ffd6f6;
+
+}
+
+.timeline-card{
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(18px);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+border-radius:25px;
+
+padding:25px;
+
+min-width:300px;
+
+transition:.4s;
+
+}
+
+.timeline-card:hover{
+
+transform:
+translateY(-10px);
+
+box-shadow:
+0 0 30px rgba(255,122,200,.3);
+
+}
+
+.event-title{
+
+font-size:1.3rem;
+
+font-weight:bold;
+
+color:#ffd700;
+
+margin-bottom:10px;
+
+}
+
+.event-date{
+
+color:#ffd6f6;
+
+margin-bottom:10px;
+
+}
+
+/* ===================================
+   FOOTER
+=================================== */
+
+.story-footer{
+
+text-align:center;
+
+padding:100px 20px;
+
+}
+
+.story-footer h2{
+
+font-size:3rem;
+
+margin-bottom:20px;
+
+color:#ffd6f6;
+
+}
+
+.story-footer p{
+
+font-size:1.1rem;
 
 opacity:.85;
 
+margin-bottom:10px;
+
 }
 
-/* =========================
+/* ===================================
    MOBILE
-========================= */
+=================================== */
 
 @media(max-width:768px){
 
-.love-counters{
+.hero-title{
 
-grid-template-columns:1fr;
+font-size:2.4rem;
 
 }
 
-.hall-grid{
+.hero-text{
 
-grid-template-columns:1fr;
+font-size:1rem;
+
+}
+
+.counter-value{
+
+font-size:1.6rem;
+
+}
+
+.stat-number{
+
+font-size:2rem;
 
 }
 
