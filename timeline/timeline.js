@@ -473,3 +473,25 @@ card
 
 updateLoveCounters();
 loadEvents();
+window.addEventListener("load", () => {
+
+setTimeout(() => {
+
+const loader =
+document.getElementById("loader");
+
+if(loader){
+
+loader.style.opacity = "0";
+
+setTimeout(() => {
+
+loader.style.display = "none";
+
+},1000);
+
+}
+
+},2500);
+
+});
