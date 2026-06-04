@@ -2,15 +2,16 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Segoe UI,sans-serif;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
 
 background:
 linear-gradient(
-180deg,
-#0b1026,
+135deg,
+#050816,
+#101935,
 #050816
 );
 
@@ -22,25 +23,7 @@ padding:30px;
 
 }
 
-.stars{
-
-position:fixed;
-
-inset:0;
-
-background-image:
-radial-gradient(
-white 1px,
-transparent 1px
-);
-
-background-size:50px 50px;
-
-opacity:.15;
-
-z-index:-1;
-
-}
+/* HEADER */
 
 header{
 
@@ -52,36 +35,50 @@ margin-bottom:40px;
 
 header h1{
 
-font-size:3rem;
+font-size:2.8rem;
 
-margin:15px 0;
+margin-top:15px;
+
+margin-bottom:10px;
 
 }
+
+header p{
+
+opacity:.8;
+
+}
+
+/* HOME BUTTON */
 
 .home-btn{
 
 display:inline-block;
 
-padding:10px 20px;
+text-decoration:none;
+
+color:white;
+
+padding:12px 20px;
+
+border-radius:15px;
 
 background:
 rgba(255,255,255,.1);
 
-border-radius:12px;
-
-color:white;
-
-text-decoration:none;
+backdrop-filter:blur(10px);
 
 }
 
+/* SEARCH */
+
 .controls{
 
-max-width:700px;
+max-width:900px;
 
 margin:auto;
 
-margin-bottom:20px;
+margin-bottom:25px;
 
 }
 
@@ -93,13 +90,17 @@ padding:15px;
 
 border:none;
 
-border-radius:12px;
+border-radius:15px;
+
+font-size:1rem;
 
 }
 
+/* FORM */
+
 .message-form{
 
-max-width:700px;
+max-width:900px;
 
 margin:auto;
 
@@ -109,26 +110,30 @@ flex-direction:column;
 
 gap:15px;
 
-background:
-rgba(255,255,255,.07);
-
 padding:25px;
 
-border-radius:20px;
+border-radius:25px;
 
-backdrop-filter:blur(12px);
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+margin-bottom:40px;
 
 }
 
+.message-form select,
 .message-form input,
-.message-form textarea,
-.message-form select{
+.message-form textarea{
 
 padding:15px;
 
 border:none;
 
-border-radius:12px;
+border-radius:15px;
+
+font-size:1rem;
 
 }
 
@@ -140,38 +145,49 @@ resize:vertical;
 
 }
 
-button{
+.message-form button{
 
 padding:15px;
 
 border:none;
 
-border-radius:12px;
+border-radius:15px;
 
 cursor:pointer;
+
+font-size:1rem;
+
+font-weight:bold;
 
 background:
 linear-gradient(
 45deg,
 #ff4fd8,
-#6b7cff
+#7b68ff
 );
 
 color:white;
 
 }
 
+/* GRID */
+
 .messages-grid{
 
 display:grid;
 
-grid-template-columns:1fr 1fr;
+grid-template-columns:
+1fr 1fr;
 
-gap:25px;
+gap:30px;
 
-margin-top:50px;
+max-width:1400px;
+
+margin:auto;
 
 }
+
+/* COLUMN */
 
 .column-title{
 
@@ -179,7 +195,11 @@ text-align:center;
 
 margin-bottom:20px;
 
+color:#ffd700;
+
 }
+
+/* CARD */
 
 .card{
 
@@ -188,31 +208,44 @@ rgba(255,255,255,.08);
 
 padding:20px;
 
-border-radius:18px;
+border-radius:20px;
 
 margin-bottom:20px;
 
-backdrop-filter:blur(12px);
+backdrop-filter:blur(10px);
 
-}
-
-.card h3{
-
-color:#ff9df0;
-
-margin-bottom:10px;
+border:
+1px solid rgba(255,255,255,.08);
 
 }
 
 .card-date{
 
-font-size:.85rem;
+font-size:.8rem;
 
 opacity:.7;
 
 margin-bottom:10px;
 
 }
+
+.card h3{
+
+margin-bottom:10px;
+
+color:#ffd700;
+
+}
+
+.card p{
+
+line-height:1.6;
+
+white-space:pre-wrap;
+
+}
+
+/* ACTIONS */
 
 .card-actions{
 
@@ -224,21 +257,46 @@ margin-top:15px;
 
 }
 
+.edit-btn,
 .delete-btn{
 
-background:#ff5a5a;
+border:none;
+
+padding:10px 15px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+color:white;
+
 }
 
 .edit-btn{
 
-background:#6b7cff;
+background:#4f8cff;
+
 }
+
+.delete-btn{
+
+background:#ff5c5c;
+
+}
+
+/* MOBILE */
 
 @media(max-width:900px){
 
 .messages-grid{
 
 grid-template-columns:1fr;
+
+}
+
+header h1{
+
+font-size:2rem;
 
 }
 
