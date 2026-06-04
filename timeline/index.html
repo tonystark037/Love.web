@@ -28,6 +28,34 @@ Every moment has a story.
 
 </header>
 
+<!-- LOVE COUNTERS -->
+
+<section class="love-counters">
+
+<div class="counter-card">
+<h3>💍 Proposal</h3>
+<div id="proposalCounter">0 Days</div>
+</div>
+
+<div class="counter-card">
+<h3>❤️ Said Yes</h3>
+<div id="yesCounter">0 Days</div>
+</div>
+
+<div class="counter-card">
+<h3>🤗 First Hug</h3>
+<div id="hugCounter">0 Days</div>
+</div>
+
+<div class="counter-card">
+<h3>💋 First Kiss</h3>
+<div id="kissCounter">0 Days</div>
+</div>
+
+</section>
+
+<!-- SEARCH -->
+
 <section class="controls">
 
 <input
@@ -37,6 +65,8 @@ placeholder="Search timeline..."
 oninput="renderEvents()">
 
 </section>
+
+<!-- EVENT FORM -->
 
 <section class="event-form">
 
@@ -59,11 +89,38 @@ id="eventNote"
 placeholder="Personal Note">
 </textarea>
 
+<label class="memory-check">
+
+<input
+type="checkbox"
+id="hallMemory">
+
+🏛️ Add to Hall of Memories
+
+</label>
+
 <button onclick="saveEvent()">
 ✨ Save Event
 </button>
 
 </section>
+
+<!-- HALL OF MEMORIES -->
+
+<section class="hall-section">
+
+<h2>
+🏛️ Hall of Memories
+</h2>
+
+<div
+id="hallContainer"
+class="hall-grid">
+</div>
+
+</section>
+
+<!-- TIMELINE -->
 
 <section class="timeline-wrapper">
 
