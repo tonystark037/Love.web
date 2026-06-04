@@ -14,31 +14,162 @@ let events = [];
 let editingId = null;
 
 /* ==========================
+   IMPORTANT DATES
+========================== */
+
+const PROPOSAL_DATE =
+"2022-08-02T12:45:00";
+
+const YES_DATE =
+"2026-03-21T00:00:00";
+
+const HUG_DATE =
+"2026-03-09T00:00:00";
+
+const KISS_DATE =
+"2026-04-02T00:00:00";
+
+/* ==========================
+   LOADER
+========================== */
+
+window.addEventListener(
+"load",
+() => {
+
+setTimeout(() => {
+
+const loader =
+document.getElementById(
+"loader"
+);
+
+if(loader){
+
+loader.style.opacity =
+"0";
+
+setTimeout(()=>{
+
+loader.style.display =
+"none";
+
+},1000);
+
+}
+
+},2500);
+
+}
+);
+
+/* ==========================
+   FLOATING HEARTS
+========================== */
+
+function createHeart(){
+
+const container =
+document.getElementById(
+"heartContainer"
+);
+
+if(!container) return;
+
+const heart =
+document.createElement(
+"div"
+);
+
+heart.className =
+"floating-heart";
+
+heart.innerHTML = "❤️";
+
+heart.style.left =
+Math.random()*100 + "%";
+
+heart.style.fontSize =
+(18 + Math.random()*18) +
+"px";
+
+container.appendChild(
+heart
+);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},8000);
+
+}
+
+setInterval(
+createHeart,
+1500
+);
+
+/* ==========================
    LOVE COUNTERS
 ========================== */
 
-const PROPOSAL_DATE = "2022-07-02";
-const YES_DATE = "2026-03-21";
-const HUG_DATE = "2026-03-21";
-const KISS_DATE = "2026-04-02";
+function updateCounter(
+id,
+dateString
+){
 
-function updateCounter(id, date){
+const start =
+new Date(dateString);
 
-const start = new Date(date);
-const now = new Date();
+const now =
+new Date();
 
 const diff =
+now - start;
+
+const days =
 Math.floor(
-(now - start) /
-(1000 * 60 * 60 * 24)
+diff / 86400000
+);
+
+const hours =
+Math.floor(
+(diff % 86400000)
+/
+3600000
+);
+
+const minutes =
+Math.floor(
+(diff % 3600000)
+/
+60000
+);
+
+const seconds =
+Math.floor(
+(diff % 60000)
+/
+1000
 );
 
 const el =
 document.getElementById(id);
 
-if(el){
-el.innerText = diff + " Days";
-}
+if(!el) return;
+
+el.innerHTML =
+
+`${days}<br>
+
+<small>
+
+${hours}h
+${minutes}m
+${seconds}s
+
+</small>`;
 
 }
 
@@ -72,6 +203,68 @@ updateLoveCounters,
 );
 
 /* ==========================
+   STATS
+========================== */
+
+function updateStats(){
+
+const total =
+events.length;
+
+const memories =
+events.filter(
+e => e.hall_of_memory
+).length;
+
+const daysTogether =
+Math.floor(
+(
+new Date() -
+new Date(PROPOSAL_DATE)
+)
+/
+86400000
+);
+
+const totalEvents =
+document.getElementById(
+"totalEvents"
+);
+
+if(totalEvents)
+totalEvents.innerText =
+total;
+
+const memoryCount =
+document.getElementById(
+"memoryCount"
+);
+
+if(memoryCount)
+memoryCount.innerText =
+memories;
+
+const milestoneCount =
+document.getElementById(
+"milestoneCount"
+);
+
+if(milestoneCount)
+milestoneCount.innerText =
+total;
+
+const days =
+document.getElementById(
+"daysTogether"
+);
+
+if(days)
+days.innerText =
+daysTogether;
+
+}
+
+/* ==========================
    LOAD EVENTS
 ========================== */
 
@@ -91,7 +284,10 @@ ascending:true
 if(error){
 
 console.error(error);
-alert("Failed to load events");
+
+alert(
+"Failed to load events"
+);
 
 return;
 
@@ -100,6 +296,8 @@ return;
 events = data || [];
 
 renderEvents();
+
+updateStats();
 
 }
 
@@ -170,7 +368,10 @@ editingId
 if(error){
 
 console.error(error);
-alert("Update failed");
+
+alert(
+JSON.stringify(error)
+);
 
 return;
 
@@ -196,8 +397,10 @@ hall_of_memory
 if(error){
 
 console.error(error);
-alert(JSON.stringify(error));
-console.error(error);
+
+alert(
+JSON.stringify(error)
+);
 
 return;
 
@@ -237,7 +440,7 @@ async function deleteEvent(id){
 
 if(
 !confirm(
-"Delete this event?"
+"Delete this chapter?"
 )
 )return;
 
@@ -313,6 +516,37 @@ behavior:"smooth"
 }
 
 /* ==========================
+   MEMORY POPUP
+========================== */
+
+function openMemory(id){
+
+const ev =
+events.find(
+e => e.id === id
+);
+
+if(!ev) return;
+
+alert(
+
+`${ev.title}
+
+${new Date(
+ev.event_date
+).toLocaleDateString()}
+
+${ev.short_text || ""}
+
+${ev.note || ""}
+
+❤️ Forever Our Memory`
+
+);
+
+}
+
+/* ==========================
    HALL OF MEMORIES
 ========================== */
 
@@ -329,20 +563,29 @@ container.innerHTML = "";
 
 events
 .filter(
-e => e.hall_of_memory === true
+e => e.hall_of_memory
 )
 .forEach(ev => {
 
 container.innerHTML += `
 
-<div class="memory-card">
+<div
+class="memory-card"
+onclick="openMemory('${ev.id}')"
+>
 
-<h3>${ev.title}</h3>
+<h3>
+
+${ev.title}
+
+</h3>
 
 <p>
+
 ${new Date(
 ev.event_date
 ).toLocaleDateString()}
+
 </p>
 
 </div>
@@ -366,6 +609,8 @@ document.getElementById(
 "timelineContainer"
 );
 
+if(!container) return;
+
 const search =
 document.getElementById(
 "searchBox"
@@ -375,7 +620,8 @@ document.getElementById(
 
 container.innerHTML = "";
 
-events.forEach(ev => {
+events.forEach(
+(ev,index) => {
 
 const content =
 (
@@ -395,49 +641,20 @@ const card =
 document.createElement(
 "div"
 );
-function createHeart(){
 
-const container =
-document.getElementById(
-"heartContainer"
-);
-
-if(!container) return;
-
-const heart =
-document.createElement("div");
-
-heart.innerHTML = "❤️";
-
-heart.className =
-"floating-heart";
-
-heart.style.left =
-Math.random()*100 + "%";
-
-heart.style.fontSize =
-(20 + Math.random()*20) + "px";
-
-container.appendChild(
-heart
-);
-
-setTimeout(()=>{
-
-heart.remove();
-
-},8000);
-
-}
-
-setInterval(
-createHeart,
-1500
-);
 card.className =
 "timeline-card";
 
 card.innerHTML = `
+
+<div class="chapter-number">
+
+CHAPTER
+${String(
+index + 1
+).padStart(2,"0")}
+
+</div>
 
 <div class="event-date">
 
@@ -473,7 +690,7 @@ ${ev.note || "No note added"}
 class="edit-btn"
 onclick="
 event.stopPropagation();
-editEvent('${ev.id}')
+editEvent('${ev.id}');
 ">
 
 Edit
@@ -484,7 +701,7 @@ Edit
 class="delete-btn"
 onclick="
 event.stopPropagation();
-deleteEvent('${ev.id}')
+deleteEvent('${ev.id}');
 ">
 
 Delete
@@ -511,25 +728,3 @@ card
 
 updateLoveCounters();
 loadEvents();
-window.addEventListener("load", () => {
-
-setTimeout(() => {
-
-const loader =
-document.getElementById("loader");
-
-if(loader){
-
-loader.style.opacity = "0";
-
-setTimeout(() => {
-
-loader.style.display = "none";
-
-},1000);
-
-}
-
-},2500);
-
-});
