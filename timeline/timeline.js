@@ -13,7 +13,63 @@ SUPABASE_KEY
 let events = [];
 let editingId = null;
 
-/* LOAD EVENTS */
+/* =========================
+   LOVE COUNTERS
+========================= */
+
+const PROPOSAL_DATE = "2025-01-17";
+const YES_DATE = "2026-03-21";
+const HUG_DATE = "2026-03-09";
+const KISS_DATE = "2026-04-02";
+
+function updateCounter(elementId, dateString){
+
+const start = new Date(dateString);
+const now = new Date();
+
+const diff = now - start;
+
+const days =
+Math.floor(diff / (1000*60*60*24));
+
+document.getElementById(
+elementId
+).innerText =
+days + " Days";
+}
+
+function updateLoveCounters(){
+
+updateCounter(
+"proposalCounter",
+PROPOSAL_DATE
+);
+
+updateCounter(
+"yesCounter",
+YES_DATE
+);
+
+updateCounter(
+"hugCounter",
+HUG_DATE
+);
+
+updateCounter(
+"kissCounter",
+KISS_DATE
+);
+
+}
+
+setInterval(
+updateLoveCounters,
+1000
+);
+
+/* =========================
+   LOAD EVENTS
+========================= */
 
 async function loadEvents(){
 
@@ -31,7 +87,6 @@ ascending:true
 if(error){
 
 console.error(error);
-
 return;
 
 }
@@ -42,7 +97,9 @@ renderEvents();
 
 }
 
-/* SAVE EVENT */
+/* =========================
+   SAVE EVENT
+========================= */
 
 async function saveEvent(){
 
@@ -65,6 +122,11 @@ const note =
 document.getElementById(
 "eventNote"
 ).value.trim();
+
+const hall_of_memory =
+document.getElementById(
+"hallMemory"
+).checked;
 
 if(
 !event_date ||
@@ -90,7 +152,8 @@ await db
 event_date,
 title,
 short_text,
-note
+note,
+hall_of_memory
 
 })
 .eq(
@@ -122,7 +185,8 @@ await db
 event_date,
 title,
 short_text,
-note
+note,
+hall_of_memory
 
 }]);
 
@@ -156,11 +220,17 @@ document.getElementById(
 "eventNote"
 ).value = "";
 
+document.getElementById(
+"hallMemory"
+).checked = false;
+
 await loadEvents();
 
 }
 
-/* DELETE */
+/* =========================
+   DELETE EVENT
+========================= */
 
 async function deleteEvent(id){
 
@@ -191,7 +261,9 @@ await loadEvents();
 
 }
 
-/* EDIT */
+/* =========================
+   EDIT EVENT
+========================= */
 
 function editEvent(id){
 
@@ -222,6 +294,11 @@ document.getElementById(
 ).value =
 ev.note || "";
 
+document.getElementById(
+"hallMemory"
+).checked =
+ev.hall_of_memory || false;
+
 editingId = id;
 
 window.scrollTo({
@@ -234,7 +311,9 @@ behavior:"smooth"
 
 }
 
-/* EXPAND CARD */
+/* =========================
+   EXPAND CARD
+========================= */
 
 function toggleCard(card){
 
@@ -244,9 +323,56 @@ card.classList.toggle(
 
 }
 
-/* RENDER */
+/* =========================
+   HALL OF MEMORIES
+========================= */
+
+function renderHallOfMemories(){
+
+const container =
+document.getElementById(
+"hallContainer"
+);
+
+if(!container) return;
+
+container.innerHTML = "";
+
+events
+.filter(
+e => e.hall_of_memory === true
+)
+.forEach(ev => {
+
+container.innerHTML += `
+
+<div class="memory-card">
+
+<h3>
+${ev.title}
+</h3>
+
+<p>
+${new Date(
+ev.event_date
+).toLocaleDateString()}
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* =========================
+   RENDER EVENTS
+========================= */
 
 function renderEvents(){
+
+renderHallOfMemories();
 
 const container =
 document.getElementById(
@@ -361,6 +487,9 @@ card
 
 }
 
-/* START */
+/* =========================
+   START
+========================= */
 
+updateLoveCounters();
 loadEvents();
