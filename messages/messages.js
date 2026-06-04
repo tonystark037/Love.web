@@ -18,27 +18,16 @@ async function loadMessages(){
 const { data, error } =
 await db
 .from("messages")
-.select("*")
-.order(
-"created_at",
-{
-ascending:false
-}
-);
+.select("*");
 
-if(error){
-
-console.error(error);
-
-return;
-}
+console.log("DATA:", data);
+console.log("ERROR:", error);
 
 messages = data || [];
 
 renderMessages();
 
 }
-
 async function saveMessage(){
 
 const side =
