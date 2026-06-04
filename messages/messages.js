@@ -1,79 +1,163 @@
-let messages =
-JSON.parse(
-localStorage.getItem("vaultMessages")
-) || [];
+// ======================
+// SUPABASE CONFIG
+// ======================
 
-let editingIndex = null;
+const SUPABASE_URL =
+"PASTE_YOUR_SUPABASE_URL_HERE";
 
-function saveStorage(){
+const SUPABASE_KEY =
+"PASTE_YOUR_PUBLISHABLE_KEY_HERE";
 
-localStorage.setItem(
-"vaultMessages",
-JSON.stringify(messages)
+const supabase =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
+// ======================
+
+let messages = [];
+
+let editingId = null;
+
+// ======================
+// LOAD MESSAGES
+// ======================
+
+async function loadMessages(){
+
+const { data, error } =
+await supabase
+.from("messages")
+.select("*")
+.order(
+"created_at",
+{
+ascending:true
 }
+);
 
-function saveMessage(){
+if(error){
 
-const side =
-document.getElementById("messageSide").value;
+console.error(error);
 
-const title =
-document.getElementById("messageTitle").value.trim();
-
-const text =
-document.getElementById("messageText").value.trim();
-
-if(!title || !text){
-
-alert("Please fill all fields ❤️");
+alert(
+"Failed to load messages"
+);
 
 return;
-
 }
 
-const message = {
-
-side,
-
-title,
-
-text,
-
-date:
-new Date().toLocaleString()
-
-};
-
-if(editingIndex !== null){
-
-messages[editingIndex] =
-message;
-
-editingIndex = null;
-
-}else{
-
-messages.push(message);
-
-}
-
-saveStorage();
-
-document.getElementById(
-"messageTitle"
-).value="";
-
-document.getElementById(
-"messageText"
-).value="";
+messages = data || [];
 
 renderMessages();
 
 }
 
-function deleteMessage(index){
+// ======================
+// SAVE MESSAGE
+// ======================
+
+async function saveMessage(){
+
+const side =
+document.getElementById(
+"messageSide"
+).value;
+
+const title =
+document.getElementById(
+"messageTitle"
+).value.trim();
+
+const text =
+document.getElementById(
+"messageText"
+).value.trim();
+
+if(!title || !text){
+
+alert(
+"Please fill all fields ❤️"
+);
+
+return;
+
+}
+
+if(editingId){
+
+const { error } =
+await supabase
+.from("messages")
+.update({
+
+side,
+title,
+text
+
+})
+.eq(
+"id",
+editingId
+);
+
+if(error){
+
+console.error(error);
+
+alert(
+"Update failed"
+);
+
+return;
+}
+
+editingId = null;
+
+}else{
+
+const { error } =
+await supabase
+.from("messages")
+.insert([{
+
+side,
+title,
+text
+
+}]);
+
+if(error){
+
+console.error(error);
+
+alert(
+"Save failed"
+);
+
+return;
+}
+
+}
+
+document.getElementById(
+"messageTitle"
+).value = "";
+
+document.getElementById(
+"messageText"
+).value = "";
+
+await loadMessages();
+
+}
+
+// ======================
+// DELETE
+// ======================
+
+async function deleteMessage(id){
 
 if(
 !confirm(
@@ -81,18 +165,42 @@ if(
 )
 ) return;
 
-messages.splice(index,1);
+const { error } =
+await supabase
+.from("messages")
+.delete()
+.eq(
+"id",
+id
+);
 
-saveStorage();
+if(error){
 
-renderMessages();
+console.error(error);
+
+alert(
+"Delete failed"
+);
+
+return;
+}
+
+await loadMessages();
 
 }
 
-function editMessage(index){
+// ======================
+// EDIT
+// ======================
+
+function editMessage(id){
 
 const msg =
-messages[index];
+messages.find(
+m => m.id === id
+);
+
+if(!msg) return;
 
 document.getElementById(
 "messageSide"
@@ -106,14 +214,21 @@ document.getElementById(
 "messageText"
 ).value = msg.text;
 
-editingIndex = index;
+editingId = id;
 
 window.scrollTo({
+
 top:0,
+
 behavior:"smooth"
+
 });
 
 }
+
+// ======================
+// RENDER
+// ======================
 
 function renderMessages(){
 
@@ -130,16 +245,21 @@ document.getElementById(
 const search =
 document.getElementById(
 "searchBox"
-).value.toLowerCase();
+)
+.value
+.toLowerCase();
 
-herContainer.innerHTML="";
-myContainer.innerHTML="";
+herContainer.innerHTML = "";
+myContainer.innerHTML = "";
 
-messages.forEach(
-(msg,index)=>{
+messages.forEach(msg => {
 
 const content =
-(msg.title + " " + msg.text)
+(
+(msg.title || "") +
+" " +
+(msg.text || "")
+)
 .toLowerCase();
 
 if(
@@ -151,22 +271,30 @@ const card = `
 <div class="card">
 
 <div class="card-date">
-${msg.date}
+
+${new Date(
+msg.created_at
+).toLocaleString()}
+
 </div>
 
 <h3>
+
 ${msg.title}
+
 </h3>
 
 <p>
+
 ${msg.text}
+
 </p>
 
 <div class="card-actions">
 
 <button
 class="edit-btn"
-onclick="editMessage(${index})">
+onclick="editMessage('${msg.id}')">
 
 Edit
 
@@ -174,7 +302,7 @@ Edit
 
 <button
 class="delete-btn"
-onclick="deleteMessage(${index})">
+onclick="deleteMessage('${msg.id}')">
 
 Delete
 
@@ -200,4 +328,8 @@ myContainer.innerHTML += card;
 
 }
 
-renderMessages();
+// ======================
+// START
+// ======================
+
+loadMessages();
