@@ -421,3 +421,205 @@ padding:80px 20px;
 }
 
 }
+/* =========================
+   LOVE COUNTERS
+========================= */
+
+.love-counters{
+
+max-width:1400px;
+
+margin:40px auto;
+
+padding:0 20px;
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+}
+
+.counter-card{
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(15px);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+border-radius:25px;
+
+padding:25px;
+
+text-align:center;
+
+transition:.3s;
+
+}
+
+.counter-card:hover{
+
+transform:
+translateY(-5px);
+
+box-shadow:
+0 0 25px rgba(255,215,0,.25);
+
+}
+
+.counter-card h3{
+
+margin-bottom:12px;
+
+color:#ffd700;
+
+}
+
+.counter-card div{
+
+font-size:1.4rem;
+
+font-weight:bold;
+
+}
+
+/* =========================
+   MEMORY CHECKBOX
+========================= */
+
+.memory-check{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+font-size:1rem;
+
+padding:10px;
+
+background:
+rgba(255,215,0,.08);
+
+border-radius:12px;
+
+}
+
+.memory-check input{
+
+width:20px;
+
+height:20px;
+
+cursor:pointer;
+
+}
+
+/* =========================
+   HALL OF MEMORIES
+========================= */
+
+.hall-section{
+
+max-width:1400px;
+
+margin:50px auto;
+
+padding:0 20px;
+
+}
+
+.hall-section h2{
+
+text-align:center;
+
+margin-bottom:30px;
+
+font-size:2rem;
+
+color:#ffd700;
+
+}
+
+.hall-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:25px;
+
+}
+
+.memory-card{
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(15px);
+
+padding:25px;
+
+border-radius:20px;
+
+border:
+1px solid rgba(255,255,255,.08);
+
+transition:.4s;
+
+cursor:pointer;
+
+}
+
+.memory-card:hover{
+
+transform:
+translateY(-8px);
+
+box-shadow:
+0 0 25px rgba(255,215,0,.35);
+
+}
+
+.memory-card h3{
+
+color:#ffd700;
+
+margin-bottom:10px;
+
+}
+
+.memory-card p{
+
+opacity:.85;
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+.love-counters{
+
+grid-template-columns:1fr;
+
+}
+
+.hall-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
