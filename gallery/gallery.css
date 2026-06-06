@@ -14,16 +14,16 @@ body{
 background:
 radial-gradient(
 circle at top,
-#2b0d26,
-#13071a 40%,
+#24103a,
+#12051f 40%,
 #050816 100%
 );
 
 color:white;
 
-min-height:100vh;
-
 overflow-x:hidden;
+
+min-height:100vh;
 
 }
 
@@ -34,7 +34,6 @@ overflow-x:hidden;
 .hearts{
 
 position:fixed;
-
 top:0;
 left:0;
 
@@ -43,28 +42,30 @@ height:100%;
 
 pointer-events:none;
 
-z-index:-1;
+z-index:-2;
+
+overflow:hidden;
 
 }
 
 .hearts::before{
 
-content:"❤️ ❤️ 💖 ❤️ 💕 ❤️";
+content:"❤️ 💖 💕 ❤️ 💖 💕 ❤️";
 
 position:absolute;
 
 width:100%;
 
-font-size:24px;
+font-size:26px;
+
+opacity:.12;
 
 animation:
-floatHearts 20s linear infinite;
-
-opacity:.15;
+heartFloat 20s linear infinite;
 
 }
 
-@keyframes floatHearts{
+@keyframes heartFloat{
 
 from{
 
@@ -76,7 +77,7 @@ translateY(100vh);
 to{
 
 transform:
-translateY(-120vh);
+translateY(-150vh);
 
 }
 
@@ -90,7 +91,7 @@ header{
 
 text-align:center;
 
-padding:50px 20px;
+padding:60px 20px;
 
 }
 
@@ -100,17 +101,17 @@ display:inline-block;
 
 padding:12px 22px;
 
-border-radius:25px;
-
-background:
-rgba(255,255,255,.1);
-
-backdrop-filter:
-blur(10px);
+border-radius:30px;
 
 text-decoration:none;
 
 color:white;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(15px);
 
 margin-bottom:20px;
 
@@ -118,14 +119,14 @@ margin-bottom:20px;
 
 header h1{
 
-font-size:3.5rem;
+font-size:4rem;
 
 background:
 linear-gradient(
 45deg,
-#ffd6f6,
-#ff7ac8,
-#ffd700
+#ffd700,
+#ff9eea,
+#ffffff
 );
 
 -webkit-background-clip:text;
@@ -137,9 +138,191 @@ margin-bottom:15px;
 
 header p{
 
+font-size:1.15rem;
+
+opacity:.85;
+
+}
+
+/* =========================
+   RELATIONSHIP COUNTER
+========================= */
+
+.relationship-counter{
+
+margin-top:35px;
+
+display:flex;
+
+justify-content:center;
+
+}
+
+.counter-card{
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(20px);
+
+padding:25px;
+
+border-radius:25px;
+
+min-width:280px;
+
+box-shadow:
+0 0 30px rgba(255,215,0,.15);
+
+}
+
+.counter-card h2{
+
+font-size:2rem;
+
+color:#ffd700;
+
+margin-top:10px;
+
+}
+
+/* =========================
+   COMMON CARDS
+========================= */
+
+.section-card{
+
+max-width:1000px;
+
+margin:auto;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(20px);
+
+padding:30px;
+
+border-radius:30px;
+
+border:
+1px solid rgba(255,255,255,.08);
+
+}
+
+.section-card h2{
+
+margin-bottom:15px;
+
+color:#ffd700;
+
+}
+
+.today-section,
+.featured-section,
+.music-section{
+
+padding:20px;
+
+}
+
+/* =========================
+   STORY MODE
+========================= */
+
+.story-section{
+
+text-align:center;
+
+padding:30px;
+
+}
+
+.story-btn{
+
+padding:18px 40px;
+
 font-size:1.1rem;
 
+font-weight:bold;
+
+border:none;
+
+border-radius:35px;
+
+cursor:pointer;
+
+background:
+linear-gradient(
+45deg,
+#ff79c6,
+#ffd700
+);
+
+color:white;
+
+transition:.4s;
+
+}
+
+.story-btn:hover{
+
+transform:
+translateY(-4px);
+
+box-shadow:
+0 0 30px rgba(255,121,198,.4);
+
+}
+
+.story-section p{
+
+margin-top:12px;
+
 opacity:.8;
+
+}
+
+/* =========================
+   MUSIC
+========================= */
+
+.music-section input{
+
+width:100%;
+
+margin-bottom:15px;
+
+}
+
+.music-section button{
+
+padding:12px 25px;
+
+border:none;
+
+border-radius:20px;
+
+cursor:pointer;
+
+background:
+linear-gradient(
+45deg,
+#ff79c6,
+#ffd700
+);
+
+color:white;
+
+margin-bottom:15px;
+
+}
+
+audio{
+
+width:100%;
 
 }
 
@@ -169,12 +352,12 @@ padding:20px;
 background:
 rgba(255,255,255,.08);
 
-backdrop-filter:
-blur(20px);
-
 padding:25px;
 
 border-radius:25px;
+
+backdrop-filter:
+blur(20px);
 
 text-align:center;
 
@@ -191,7 +374,7 @@ margin-bottom:10px;
 }
 
 /* =========================
-   SURPRISE BUTTON
+   BUTTONS
 ========================= */
 
 .top-actions{
@@ -204,24 +387,24 @@ margin:20px;
 
 .surprise-btn{
 
-padding:15px 30px;
+padding:15px 35px;
 
 border:none;
 
-border-radius:30px;
-
-cursor:pointer;
-
-font-size:1rem;
+border-radius:35px;
 
 font-weight:bold;
+
+cursor:pointer;
 
 background:
 linear-gradient(
 45deg,
-#ff7ac8,
+#ff79c6,
 #ffd700
 );
+
+color:white;
 
 }
 
@@ -231,7 +414,7 @@ linear-gradient(
 
 .upload-section{
 
-max-width:800px;
+max-width:850px;
 
 margin:40px auto;
 
@@ -243,7 +426,7 @@ background:
 rgba(255,255,255,.08);
 
 backdrop-filter:
-blur(15px);
+blur(20px);
 
 display:flex;
 
@@ -257,13 +440,13 @@ gap:15px;
 
 text-align:center;
 
-margin-bottom:10px;
+margin-bottom:15px;
 
 }
 
 .upload-section input,
-.upload-section textarea,
-.upload-section select{
+.upload-section select,
+.upload-section textarea{
 
 padding:15px;
 
@@ -296,14 +479,16 @@ border-radius:20px;
 
 cursor:pointer;
 
-font-weight:bold;
-
 background:
 linear-gradient(
 45deg,
-#ff7ac8,
+#ff79c6,
 #ffd700
 );
+
+color:white;
+
+font-weight:bold;
 
 }
 
@@ -311,9 +496,31 @@ linear-gradient(
 
 display:flex;
 
+align-items:center;
+
 gap:10px;
 
-align-items:center;
+}
+
+/* =========================
+   GALLERY TITLE
+========================= */
+
+.gallery-title{
+
+text-align:center;
+
+padding:50px 20px 20px;
+
+}
+
+.gallery-title h2{
+
+font-size:2.3rem;
+
+margin-bottom:10px;
+
+color:#ffd700;
 
 }
 
@@ -323,9 +530,9 @@ align-items:center;
 
 .folder-block{
 
-margin:60px auto;
-
 max-width:1400px;
+
+margin:60px auto;
 
 padding:20px;
 
@@ -336,14 +543,14 @@ padding:20px;
 background:
 rgba(255,255,255,.08);
 
-backdrop-filter:
-blur(20px);
-
 padding:25px;
 
 border-radius:25px;
 
-margin-bottom:20px;
+margin-bottom:25px;
+
+backdrop-filter:
+blur(20px);
 
 }
 
@@ -351,9 +558,9 @@ margin-bottom:20px;
 
 font-size:2rem;
 
-margin-bottom:10px;
-
 color:#ffd700;
+
+margin-bottom:10px;
 
 }
 
@@ -366,7 +573,7 @@ font-style:italic;
 }
 
 /* =========================
-   MASONRY GALLERY
+   GALLERY GRID
 ========================= */
 
 .gallery-grid{
@@ -413,10 +620,10 @@ break-inside:avoid;
 
 margin-bottom:20px;
 
+padding:12px;
+
 background:
 rgba(255,255,255,.08);
-
-padding:12px;
 
 border-radius:20px;
 
@@ -433,7 +640,7 @@ transform:
 translateY(-8px);
 
 box-shadow:
-0 0 30px rgba(255,122,200,.3);
+0 0 35px rgba(255,121,198,.25);
 
 }
 
@@ -449,15 +656,15 @@ cursor:pointer;
 
 .photo-info{
 
-padding:15px 5px;
+padding:12px 5px;
 
 }
 
 .photo-title{
 
-font-size:1.1rem;
-
 color:#ffd700;
+
+font-size:1.05rem;
 
 margin-bottom:8px;
 
@@ -465,7 +672,7 @@ margin-bottom:8px;
 
 .photo-date{
 
-color:#ffb7d9;
+color:#ffb6e8;
 
 margin-bottom:8px;
 
@@ -490,7 +697,7 @@ padding:5px 12px;
 border-radius:20px;
 
 background:
-rgba(255,215,0,.25);
+rgba(255,215,0,.2);
 
 }
 
@@ -509,7 +716,7 @@ width:100%;
 height:100%;
 
 background:
-rgba(0,0,0,.92);
+rgba(0,0,0,.95);
 
 display:none;
 
@@ -550,7 +757,8 @@ margin-bottom:20px;
 
 }
 
-#viewerTitle{
+#viewerTitle,
+#storyTitle{
 
 color:#ffd700;
 
@@ -558,16 +766,40 @@ margin-bottom:10px;
 
 }
 
-#viewerDate{
+#viewerDate,
+#storyDate{
 
-color:#ffb7d9;
+color:#ffb6e8;
 
 margin-bottom:10px;
 
 }
 
-#viewerNote{
+#viewerNote,
+#storyNote{
 
 line-height:1.7;
+
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:
+linear-gradient(
+#ff79c6,
+#ffd700
+);
+
+border-radius:20px;
 
 }
