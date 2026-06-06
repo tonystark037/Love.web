@@ -2,7 +2,7 @@ const SUPABASE_URL =
 "https://zzmceyjguctywocofjun.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_bgGrGBdrGUAfsQiujIqNmg_-cF56igy";
+"YOUR_SUPABASE_ANON_KEY";
 
 const db =
 window.supabase.createClient(
@@ -11,10 +11,8 @@ SUPABASE_KEY
 );
 
 let allMemories = [];
-
-/* ==========================
-   ROMANTIC QUOTES
-========================== */
+let storyIndex = 0;
+let storyInterval = null;
 
 const folderQuotes = {
 
@@ -47,10 +45,6 @@ Selfies:
 
 };
 
-/* ==========================
-   UPLOAD
-========================== */
-
 async function uploadPhoto(){
 
 const file =
@@ -60,10 +54,7 @@ document.getElementById(
 
 if(!file){
 
-alert(
-"Select a photo ❤️"
-);
-
+alert("Select a photo ❤️");
 return;
 
 }
@@ -94,7 +85,6 @@ document.getElementById(
 ).checked;
 
 const fileName =
-
 Date.now() +
 "-" +
 file.name.replaceAll(
@@ -104,7 +94,8 @@ file.name.replaceAll(
 
 const {
 error: uploadError
-} = await db.storage
+} =
+await db.storage
 .from("gallery")
 .upload(
 fileName,
@@ -112,10 +103,6 @@ file
 );
 
 if(uploadError){
-
-console.error(
-uploadError
-);
 
 alert(
 uploadError.message
@@ -127,7 +114,8 @@ return;
 
 const {
 data:urlData
-} = db.storage
+} =
+db.storage
 .from("gallery")
 .getPublicUrl(
 fileName
@@ -136,7 +124,9 @@ fileName
 const image_url =
 urlData.publicUrl;
 
-const { error } =
+const {
+error
+} =
 await db
 .from("gallery")
 .insert([{
@@ -159,8 +149,6 @@ favorite
 
 if(error){
 
-console.error(error);
-
 alert(
 JSON.stringify(error)
 );
@@ -169,26 +157,6 @@ return;
 
 }
 
-document.getElementById(
-"imageFile"
-).value = "";
-
-document.getElementById(
-"photoTitle"
-).value = "";
-
-document.getElementById(
-"photoDate"
-).value = "";
-
-document.getElementById(
-"photoNote"
-).value = "";
-
-document.getElementById(
-"favoriteMemory"
-).checked = false;
-
 alert(
 "Memory Saved ❤️"
 );
@@ -196,7 +164,6 @@ alert(
 loadGallery();
 
 }
-
 /* ==========================
    LOAD GALLERY
 ========================== */
@@ -206,7 +173,8 @@ async function loadGallery(){
 const {
 data,
 error
-} = await db
+} =
+await db
 .from("gallery")
 .select("*")
 .order(
@@ -218,7 +186,9 @@ ascending:false
 
 if(error){
 
-console.error(error);
+console.error(
+error
+);
 
 return;
 
@@ -228,6 +198,10 @@ allMemories =
 data || [];
 
 renderStats();
+
+renderFeaturedMemory();
+
+renderTodayMemory();
 
 renderFolders();
 
@@ -243,6 +217,8 @@ const stats =
 document.getElementById(
 "memoryStats"
 );
+
+if(!stats)return;
 
 const total =
 allMemories.length;
@@ -296,6 +272,162 @@ stats.innerHTML = `
 }
 
 /* ==========================
+   FEATURED MEMORY
+========================== */
+
+function renderFeaturedMemory(){
+
+const section =
+document.getElementById(
+"featuredMemory"
+);
+
+if(!section)return;
+
+const favorites =
+allMemories.filter(
+m => m.favorite
+);
+
+if(
+!favorites.length
+){
+
+section.innerHTML = "";
+
+return;
+
+}
+
+const memory =
+favorites[
+Math.floor(
+Math.random()
+*
+favorites.length
+)
+];
+
+section.innerHTML = `
+
+<div class="featured-card">
+
+<img
+src="${memory.image_url}">
+
+<div class="featured-info">
+
+<div class="featured-label">
+
+⭐ Featured Memory
+
+</div>
+
+<h2 class="featured-title">
+
+${memory.title || "❤️ Memory"}
+
+</h2>
+
+<p class="featured-note">
+
+${memory.memory_note || ""}
+
+</p>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+/* ==========================
+   ON THIS DAY
+========================== */
+
+function renderTodayMemory(){
+
+const section =
+document.getElementById(
+"todayMemory"
+);
+
+if(!section)return;
+
+const today =
+new Date();
+
+const day =
+today.getDate();
+
+const month =
+today.getMonth()+1;
+
+const matches =
+allMemories.filter(
+memory => {
+
+if(
+!memory.event_date
+)
+return false;
+
+const d =
+new Date(
+memory.event_date
+);
+
+return (
+d.getDate() === day &&
+d.getMonth()+1 === month
+);
+
+}
+);
+
+if(
+!matches.length
+){
+
+section.innerHTML = "";
+
+return;
+
+}
+
+const memory =
+matches[0];
+
+section.innerHTML = `
+
+<div class="today-card">
+
+<h2>
+
+🌹 On This Day
+
+</h2>
+
+<h3>
+
+${memory.title || "❤️ Memory"}
+
+</h3>
+
+<p>
+
+${memory.memory_note || ""}
+
+</p>
+
+</div>
+
+`;
+
+}
+/* ==========================
    FOLDERS
 ========================== */
 
@@ -305,6 +437,8 @@ const section =
 document.getElementById(
 "folderSection"
 );
+
+if(!section)return;
 
 section.innerHTML = "";
 
@@ -357,9 +491,9 @@ photosHTML += `
 src="${memory.image_url}"
 onclick="openViewer(
 '${memory.image_url}',
-'${memory.title || ""}',
-'${memory.event_date || ""}',
-'${memory.memory_note || ""}'
+'${escapeText(memory.title || "")}',
+'${escapeText(memory.event_date || "")}',
+'${escapeText(memory.memory_note || "")}'
 )">
 
 <div class="photo-info">
@@ -433,6 +567,24 @@ block
 }
 
 /* ==========================
+   ESCAPE TEXT
+========================== */
+
+function escapeText(text){
+
+return String(text)
+.replaceAll(
+"'",
+"&#39;"
+)
+.replaceAll(
+'"',
+"&quot;"
+);
+
+}
+
+/* ==========================
    VIEWER
 ========================== */
 
@@ -443,9 +595,17 @@ date,
 note
 ){
 
+const viewer =
+document.getElementById(
+"viewer"
+);
+
+if(!viewer)return;
+
 document.getElementById(
 "viewerImage"
-).src = img;
+).src =
+img;
 
 document.getElementById(
 "viewerTitle"
@@ -462,9 +622,7 @@ document.getElementById(
 ).innerText =
 note || "";
 
-document.getElementById(
-"viewer"
-).classList.add(
+viewer.classList.add(
 "active"
 );
 
@@ -472,13 +630,26 @@ document.getElementById(
 
 function closeViewer(){
 
+const viewer =
 document.getElementById(
 "viewer"
-).classList.remove(
+);
+
+if(viewer){
+
+viewer.classList.remove(
 "active"
 );
 
+}
 
+}
+
+/* ==========================
+   SURPRISE MEMORY
+========================== */
+
+function showRandomMemory(){
 
 if(
 !allMemories.length
@@ -515,9 +686,307 @@ random.memory_note
 );
 
 }
-
 /* ==========================
-   START
+   STORY MODE
 ========================== */
 
+function startStory(){
+
+if(
+!allMemories.length
+){
+
+alert(
+"No memories yet ❤️"
+);
+
+return;
+
+}
+
+storyIndex = 0;
+
+showStorySlide();
+
+clearInterval(
+storyInterval
+);
+
+storyInterval =
+setInterval(
+nextStory,
+5000
+);
+
+}
+
+function showStorySlide(){
+
+if(
+!allMemories.length
+)return;
+
+const memory =
+allMemories[
+storyIndex
+];
+
+openViewer(
+
+memory.image_url,
+
+memory.title,
+
+memory.event_date,
+
+memory.memory_note
+
+);
+
+}
+
+function nextStory(){
+
+storyIndex++;
+
+if(
+storyIndex >=
+allMemories.length
+){
+
+storyIndex = 0;
+
+}
+
+showStorySlide();
+
+}
+
+function closeStory(){
+
+clearInterval(
+storyInterval
+);
+
+closeViewer();
+
+}
+
+/* ==========================
+   MUSIC PLAYER
+========================== */
+
+function initMusic(){
+
+const upload =
+document.getElementById(
+"musicUpload"
+);
+
+const player =
+document.getElementById(
+"loveMusic"
+);
+
+if(
+!upload ||
+!player
+)return;
+
+const savedMusic =
+localStorage.getItem(
+"loveMusic"
+);
+
+if(savedMusic){
+
+player.src =
+savedMusic;
+
+}
+
+upload.addEventListener(
+"change",
+function(){
+
+const file =
+this.files[0];
+
+if(!file)return;
+
+const url =
+URL.createObjectURL(
+file
+);
+
+player.src =
+url;
+
+player.play();
+
+localStorage.setItem(
+"loveMusic",
+url
+);
+
+}
+);
+
+}
+
+/* ==========================
+   FOLDER IMPORT
+========================== */
+
+async function uploadFolder(){
+
+const files =
+document.getElementById(
+"folderUpload"
+)?.files;
+
+if(
+!files ||
+!files.length
+){
+
+alert(
+"Select a folder ❤️"
+);
+
+return;
+
+}
+
+let uploaded = 0;
+
+for(
+const file of files
+){
+
+if(
+!file.type.startsWith(
+"image/"
+)
+)
+continue;
+
+const folderName =
+
+file.webkitRelativePath
+.split("/")[0] ||
+"General";
+
+const fileName =
+
+Date.now()
++
+"-"
++
+Math.random()
+.toString(36)
+.substring(2)
++
+"-"
++
+file.name.replaceAll(
+" ",
+"_"
+);
+
+const upload =
+await db.storage
+.from("gallery")
+.upload(
+fileName,
+file
+);
+
+if(upload.error){
+
+console.error(
+upload.error
+);
+
+continue;
+
+}
+
+const {
+data:urlData
+} =
+db.storage
+.from("gallery")
+.getPublicUrl(
+fileName
+);
+
+await db
+.from("gallery")
+.insert([{
+
+title:
+file.name,
+
+image_url:
+urlData.publicUrl,
+
+folder:
+folderName,
+
+favorite:false,
+
+memory_note:null,
+
+event_date:null
+
+}]);
+
+uploaded++;
+
+}
+
+alert(
+
+uploaded +
+" memories imported ❤️"
+
+);
+
 loadGallery();
+
+}
+
+/* ==========================
+   KEYBOARD SUPPORT
+========================== */
+
+document.addEventListener(
+"keydown",
+function(e){
+
+if(
+e.key === "Escape"
+){
+
+closeViewer();
+
+}
+
+}
+);
+
+/* ==========================
+   SAFE STARTUP
+========================== */
+
+window.addEventListener(
+"load",
+function(){
+
+loadGallery();
+
+initMusic();
+
+}
+);
