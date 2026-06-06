@@ -83,11 +83,11 @@ file
 
 if(uploadError){
 
-console.error(
-uploadError
-);
+console.error("UPLOAD ERROR", uploadError);
 
 alert(
+uploadError.message +
+"\n" +
 JSON.stringify(uploadError)
 );
 
