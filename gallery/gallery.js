@@ -142,7 +142,7 @@ await db
 .insert([{
 
 title:
-title || null,
+title || "❤️ Memory",
 
 image_url,
 
@@ -478,13 +478,7 @@ document.getElementById(
 "active"
 );
 
-}
 
-/* ==========================
-   SURPRISE ME
-========================== */
-
-function showRandomMemory(){
 
 if(
 !allMemories.length
