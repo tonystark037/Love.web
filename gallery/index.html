@@ -4,33 +4,74 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gallery ❤️</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="gallery.css">
+<title>
+Memory Garden ❤️
+</title>
+
+<link rel="stylesheet"
+href="gallery.css">
 
 </head>
 
 <body>
 
+<div class="hearts"></div>
+
 <header>
 
-<a href="../index.html" class="home-btn">
+<a href="../index.html"
+class="home-btn">
+
 🏠 Home
+
 </a>
 
 <h1>
-📸 Our Gallery ❤️
+
+📸 Memory Garden ❤️
+
 </h1>
 
 <p>
-Every photo tells a story.
+
+Every picture is a heartbeat.
+
 </p>
 
 </header>
 
+<section class="stats-section">
+
+<div id="memoryStats"
+class="stats-grid">
+
+</div>
+
+</section>
+
+<section class="top-actions">
+
+<button
+class="surprise-btn"
+onclick="showRandomMemory()">
+
+💖 Surprise Me
+
+</button>
+
+</section>
+
 <section class="upload-section">
+
+<h2>
+
+✨ Add New Memory
+
+</h2>
 
 <input
 type="file"
@@ -40,7 +81,48 @@ accept="image/*">
 <input
 type="text"
 id="photoTitle"
-placeholder="Memory Title">
+placeholder="Memory Title (Optional)">
+
+<select
+id="photoFolder">
+
+<option value="General">
+❤️ General
+</option>
+
+<option value="Traveling">
+✈️ Traveling
+</option>
+
+<option value="Eyes">
+👀 Eyes
+</option>
+
+<option value="Saree Special">
+🥻 Saree Special
+</option>
+
+<option value="Dates">
+🌹 Dates
+</option>
+
+<option value="Selfies">
+📸 Selfies
+</option>
+
+<option value="Favorite Smiles">
+😊 Favorite Smiles
+</option>
+
+<option value="Krishna Moments">
+🦚 Krishna Moments
+</option>
+
+<option value="Future Dreams">
+✨ Future Dreams
+</option>
+
+</select>
 
 <input
 type="date"
@@ -48,36 +130,59 @@ id="photoDate">
 
 <textarea
 id="photoNote"
-placeholder="Memory Note">
+placeholder="Memory Note (Optional)">
 </textarea>
 
-<button onclick="uploadPhoto()">
+<label class="favorite-box">
 
-📸 Upload Memory
+<input
+type="checkbox"
+id="favoriteMemory">
+
+⭐ Favorite Memory
+
+</label>
+
+<button
+onclick="uploadPhoto()">
+
+📸 Save Memory
 
 </button>
 
 </section>
 
-<section
-id="galleryGrid"
-class="gallery-grid">
+<section id="folderSection">
 
 </section>
-<div
-id="viewer"
+
+<div id="viewer"
 class="viewer"
 onclick="closeViewer()">
 
-<img
-id="viewerImage">
+<div class="viewer-card">
+
+<img id="viewerImage">
+
+<h2 id="viewerTitle">
+
+</h2>
+
+<p id="viewerDate">
+
+</p>
+
+<p id="viewerNote">
+
+</p>
 
 </div>
-  
+
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="gallery.js"></script>
 
 </body>
-
 </html>
