@@ -9,7 +9,7 @@
 content="width=device-width, initial-scale=1.0">
 
 <title>
-Memory Garden ❤️
+🌙 Bluemoon's Beauty ❤️
 </title>
 
 <link rel="stylesheet"
@@ -21,6 +21,8 @@ href="gallery.css">
 
 <div class="hearts"></div>
 
+<!-- HEADER -->
+
 <header>
 
 <a href="../index.html"
@@ -31,18 +33,124 @@ class="home-btn">
 </a>
 
 <h1>
-
-📸 Memory Garden ❤️
-
+🌙 Bluemoon's Beauty ❤️
 </h1>
 
 <p>
+Every photograph is a piece of our soul.
+</p>
 
-Every picture is a heartbeat.
+<div class="relationship-counter">
+
+<div class="counter-card">
+
+<h3>❤️ Together For</h3>
+
+<h2 id="relationshipDays">
+
+Loading...
+
+</h2>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- TODAY MEMORY -->
+
+<section class="today-section">
+
+<div class="section-card">
+
+<h2>
+🌹 On This Day
+</h2>
+
+<div id="todayMemory">
+
+No memory found yet ❤️
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FEATURED MEMORY -->
+
+<section class="featured-section">
+
+<div class="section-card">
+
+<h2>
+⭐ Featured Memory
+</h2>
+
+<div id="featuredMemory">
+
+Loading Memory...
+
+</div>
+
+</div>
+
+</section>
+
+<!-- STORY MODE -->
+
+<section class="story-section">
+
+<button
+class="story-btn"
+onclick="startStory()">
+
+▶ Relive Our Story
+
+</button>
+
+<p>
+
+A cinematic journey through our memories ❤️
 
 </p>
 
-</header>
+</section>
+
+<!-- MUSIC -->
+
+<section class="music-section">
+
+<div class="section-card">
+
+<h2>
+🎵 Our Song
+</h2>
+
+<input
+type="file"
+id="musicFile"
+accept="audio/*">
+
+<button
+onclick="uploadMusic()">
+
+🎵 Save Song
+
+</button>
+
+<audio
+id="loveMusic"
+controls>
+
+</audio>
+
+</div>
+
+</section>
+
+<!-- MEMORY STATS -->
 
 <section class="stats-section">
 
@@ -52,6 +160,8 @@ class="stats-grid">
 </div>
 
 </section>
+
+<!-- ACTIONS -->
 
 <section class="top-actions">
 
@@ -64,6 +174,8 @@ onclick="showRandomMemory()">
 </button>
 
 </section>
+
+<!-- UPLOAD -->
 
 <section class="upload-section">
 
@@ -87,39 +199,39 @@ placeholder="Memory Title (Optional)">
 id="photoFolder">
 
 <option value="General">
-❤️ General
+❤️ Our Story
 </option>
 
 <option value="Traveling">
-✈️ Traveling
+✈️ Journeys We Shared
 </option>
 
 <option value="Eyes">
-👀 Eyes
+👀 The Eyes That Changed My Life
 </option>
 
 <option value="Saree Special">
-🥻 Saree Special
+🥻 Her Saree Universe
 </option>
 
 <option value="Dates">
-🌹 Dates
+🌹 Moments That Stopped Time
 </option>
 
 <option value="Selfies">
-📸 Selfies
+📸 A Thousand Smiles
 </option>
 
 <option value="Favorite Smiles">
-😊 Favorite Smiles
+😊 Smiles I Never Want To Forget
 </option>
 
 <option value="Krishna Moments">
-🦚 Krishna Moments
+🦚 Krishna's Blessings
 </option>
 
 <option value="Future Dreams">
-✨ Future Dreams
+✨ Dreams Yet To Come
 </option>
 
 </select>
@@ -152,9 +264,27 @@ onclick="uploadPhoto()">
 
 </section>
 
+<!-- MEMORY GARDEN -->
+
+<section class="gallery-title">
+
+<h2>
+📸 Temple Of Memories ❤️
+</h2>
+
+<p>
+
+Every folder holds a chapter of our journey.
+
+</p>
+
+</section>
+
 <section id="folderSection">
 
 </section>
+
+<!-- FULLSCREEN VIEWER -->
 
 <div id="viewer"
 class="viewer"
@@ -164,17 +294,37 @@ onclick="closeViewer()">
 
 <img id="viewerImage">
 
-<h2 id="viewerTitle">
+<h2 id="viewerTitle"></h2>
 
-</h2>
+<p id="viewerDate"></p>
 
-<p id="viewerDate">
+<p id="viewerNote"></p>
 
-</p>
+</div>
 
-<p id="viewerNote">
+</div>
 
-</p>
+<!-- STORY VIEWER -->
+
+<div id="storyViewer"
+class="viewer">
+
+<div class="viewer-card">
+
+<img id="storyImage">
+
+<h2 id="storyTitle"></h2>
+
+<p id="storyDate"></p>
+
+<p id="storyNote"></p>
+
+<button
+onclick="stopStory()">
+
+❌ Close Story
+
+</button>
 
 </div>
 
