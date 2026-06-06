@@ -69,7 +69,9 @@ file.name.replaceAll(
 );
 
 /* Upload To Storage */
-
+console.log("Uploading to bucket:", "gallery");
+console.log("File:", file);
+console.log("FileName:", fileName);
 const {
 error: uploadError
 } = await db.storage
