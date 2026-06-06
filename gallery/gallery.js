@@ -1,3 +1,4 @@
+console.log("GALLERY JS VERSION 2026-06-05");
 const SUPABASE_URL =
 "https://zzmceyjguctywocofjun.supabase.co";
 
