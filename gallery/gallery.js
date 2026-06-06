@@ -1,9 +1,8 @@
-console.log("GALLERY JS VERSION 2026-06-05");
 const SUPABASE_URL =
 "https://zzmceyjguctywocofjun.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_bgGrGBdrGUAfsQiujIqNmg_-cF56igy";
+"YOUR_SUPABASE_KEY";
 
 const db =
 window.supabase.createClient(
@@ -11,8 +10,45 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
+let allMemories = [];
+
 /* ==========================
-   UPLOAD PHOTO
+   ROMANTIC QUOTES
+========================== */
+
+const folderQuotes = {
+
+General:
+"Every memory has a heartbeat ❤️",
+
+Traveling:
+"Every road became beautiful because you were there ❤️",
+
+Eyes:
+"I found my home inside your eyes ❤️",
+
+"Saree Special":
+"Every saree made my heartbeat forget its rhythm ❤️",
+
+Dates:
+"Hours passed, but I never wanted them to end ❤️",
+
+Selfies:
+"A thousand selfies, one beautiful soul ❤️",
+
+"Favorite Smiles":
+"Your smile is my favorite destination ❤️",
+
+"Krishna Moments":
+"Blessed by Krishna, guided by love ❤️",
+
+"Future Dreams":
+"Our future is my favorite dream ❤️"
+
+};
+
+/* ==========================
+   UPLOAD
 ========================== */
 
 async function uploadPhoto(){
@@ -25,7 +61,7 @@ document.getElementById(
 if(!file){
 
 alert(
-"Please select a photo ❤️"
+"Select a photo ❤️"
 );
 
 return;
@@ -37,41 +73,35 @@ document.getElementById(
 "photoTitle"
 ).value.trim();
 
+const folder =
+document.getElementById(
+"photoFolder"
+).value;
+
 const event_date =
 document.getElementById(
 "photoDate"
-).value;
+).value || null;
 
 const memory_note =
 document.getElementById(
 "photoNote"
 ).value.trim();
 
-if(!title){
-
-alert(
-"Please enter title ❤️"
-);
-
-return;
-
-}
+const favorite =
+document.getElementById(
+"favoriteMemory"
+).checked;
 
 const fileName =
 
 Date.now() +
-
 "-" +
-
 file.name.replaceAll(
 " ",
 "_"
 );
 
-/* Upload To Storage */
-console.log("Uploading to bucket:", "gallery");
-console.log("File:", file);
-console.log("FileName:", fileName);
 const {
 error: uploadError
 } = await db.storage
@@ -83,22 +113,20 @@ file
 
 if(uploadError){
 
-console.error("UPLOAD ERROR", uploadError);
+console.error(
+uploadError
+);
 
 alert(
-uploadError.message +
-"\n" +
-JSON.stringify(uploadError)
+uploadError.message
 );
 
 return;
 
 }
 
-/* Get Public URL */
-
 const {
-data
+data:urlData
 } = db.storage
 .from("gallery")
 .getPublicUrl(
@@ -106,20 +134,26 @@ fileName
 );
 
 const image_url =
-data.publicUrl;
+urlData.publicUrl;
 
-/* Save To Database */
-
-const {
-error
-} = await db
+const { error } =
+await db
 .from("gallery")
 .insert([{
 
-title,
+title:
+title || null,
+
 image_url,
-memory_note,
-event_date
+
+memory_note:
+memory_note || null,
+
+event_date,
+
+folder,
+
+favorite
 
 }]);
 
@@ -135,8 +169,6 @@ return;
 
 }
 
-/* Clear Form */
-
 document.getElementById(
 "imageFile"
 ).value = "";
@@ -153,8 +185,12 @@ document.getElementById(
 "photoNote"
 ).value = "";
 
+document.getElementById(
+"favoriteMemory"
+).checked = false;
+
 alert(
-"Memory saved ❤️"
+"Memory Saved ❤️"
 );
 
 loadGallery();
@@ -188,51 +224,171 @@ return;
 
 }
 
-const grid =
+allMemories =
+data || [];
+
+renderStats();
+
+renderFolders();
+
+}
+
+/* ==========================
+   STATS
+========================== */
+
+function renderStats(){
+
+const stats =
 document.getElementById(
-"galleryGrid"
+"memoryStats"
 );
 
-grid.innerHTML = "";
+const total =
+allMemories.length;
 
-(data || []).forEach(
-photo => {
+const folders =
+new Set(
+allMemories.map(
+m => m.folder
+)
+).size;
 
-grid.innerHTML += `
+const favorites =
+allMemories.filter(
+m => m.favorite
+).length;
+
+stats.innerHTML = `
+
+<div class="stat-card">
+
+<h3>${total}</h3>
+
+<p>
+❤️ Total Memories
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h3>${folders}</h3>
+
+<p>
+📂 Folders
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h3>${favorites}</h3>
+
+<p>
+⭐ Favorites
+</p>
+
+</div>
+
+`;
+
+}
+
+/* ==========================
+   FOLDERS
+========================== */
+
+function renderFolders(){
+
+const section =
+document.getElementById(
+"folderSection"
+);
+
+section.innerHTML = "";
+
+const folders = {};
+
+allMemories.forEach(
+memory => {
+
+const folder =
+memory.folder ||
+"General";
+
+if(
+!folders[folder]
+){
+
+folders[folder] = [];
+
+}
+
+folders[folder]
+.push(memory);
+
+}
+);
+
+Object.keys(
+folders
+).forEach(folder => {
+
+const block =
+document.createElement(
+"div"
+);
+
+block.className =
+"folder-block";
+
+let photosHTML =
+'<div class="gallery-grid">';
+
+folders[folder]
+.forEach(memory => {
+
+photosHTML += `
 
 <div class="photo-card">
 
 <img
-src="${photo.image_url}"
-onclick="openViewer('${photo.image_url}')">
+src="${memory.image_url}"
+onclick="openViewer(
+'${memory.image_url}',
+'${memory.title || ""}',
+'${memory.event_date || ""}',
+'${memory.memory_note || ""}'
+)">
 
 <div class="photo-info">
 
-<h3>
+<div class="photo-title">
 
-${photo.title}
+${memory.title || "❤️ Memory"}
 
-</h3>
+</div>
 
 <div class="photo-date">
 
-${photo.event_date || ""}
+${memory.event_date || ""}
 
 </div>
 
 <div class="photo-note">
 
-${photo.memory_note || ""}
+${memory.memory_note || ""}
 
 </div>
 
-<button
-class="delete-btn"
-onclick="deletePhoto('${photo.id}')">
-
-Delete
-
-</button>
+${
+memory.favorite
+?
+'<div class="favorite-tag">⭐ Favorite</div>'
+:
+''
+}
 
 </div>
 
@@ -242,43 +398,37 @@ Delete
 
 });
 
-}
+photosHTML += "</div>";
 
-/* ==========================
-   DELETE
-========================== */
+block.innerHTML = `
 
-async function deletePhoto(id){
+<div class="folder-header">
 
-if(
-!confirm(
-"Delete this memory?"
-)
-)return;
+<div class="folder-title">
 
-const {
-error
-} = await db
-.from("gallery")
-.delete()
-.eq(
-"id",
-id
+📂 ${folder}
+
+</div>
+
+<div class="folder-quote">
+
+${folderQuotes[folder]
+||
+folderQuotes.General}
+
+</div>
+
+</div>
+
+${photosHTML}
+
+`;
+
+section.appendChild(
+block
 );
 
-if(error){
-
-console.error(error);
-
-alert(
-"Delete failed"
-);
-
-return;
-
-}
-
-loadGallery();
+});
 
 }
 
@@ -286,11 +436,31 @@ loadGallery();
    VIEWER
 ========================== */
 
-function openViewer(url){
+function openViewer(
+img,
+title,
+date,
+note
+){
 
 document.getElementById(
 "viewerImage"
-).src = url;
+).src = img;
+
+document.getElementById(
+"viewerTitle"
+).innerText =
+title || "❤️ Memory";
+
+document.getElementById(
+"viewerDate"
+).innerText =
+date || "";
+
+document.getElementById(
+"viewerNote"
+).innerText =
+note || "";
 
 document.getElementById(
 "viewer"
@@ -306,6 +476,48 @@ document.getElementById(
 "viewer"
 ).classList.remove(
 "active"
+);
+
+}
+
+/* ==========================
+   SURPRISE ME
+========================== */
+
+function showRandomMemory(){
+
+if(
+!allMemories.length
+){
+
+alert(
+"No memories yet ❤️"
+);
+
+return;
+
+}
+
+const random =
+
+allMemories[
+Math.floor(
+Math.random()
+*
+allMemories.length
+)
+];
+
+openViewer(
+
+random.image_url,
+
+random.title,
+
+random.event_date,
+
+random.memory_note
+
 );
 
 }
