@@ -18,10 +18,10 @@ let allMemories = [];
 
 const folderQuotes = {
 
-General:
+Choti Pari:
 "Every memory has a heartbeat ❤️",
 
-Traveling:
+Outdoor:
 "Every road became beautiful because you were there ❤️",
 
 Eyes:
@@ -33,17 +33,15 @@ Eyes:
 Dates:
 "Hours passed, but I never wanted them to end ❤️",
 
-Selfies:
-"A thousand selfies, one beautiful soul ❤️",
+Uff, yeh NAJAR:
 
-"Favorite Smiles":
+"AI":
 "Your smile is my favorite destination ❤️",
 
-"Krishna Moments":
-"Blessed by Krishna, guided by love ❤️",
+"FAV":
+"DIVINE BEAUTY ❤️",
 
-"Future Dreams":
-"Our future is my favorite dream ❤️"
+"MY HOTTY":
 
 };
 
