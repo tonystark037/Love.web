@@ -1,13 +1,15 @@
-/* ==========================
-   BACKGROUND
-========================== */
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
 
 body{
-
-margin:0;
-
-font-family:
-Arial,sans-serif;
 
 background:
 radial-gradient(
@@ -21,17 +23,74 @@ color:white;
 
 min-height:100vh;
 
+overflow-x:hidden;
+
 }
 
-/* ==========================
+/* =========================
+   FLOATING HEARTS
+========================= */
+
+.hearts{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
+z-index:-1;
+
+}
+
+.hearts::before{
+
+content:"❤️ ❤️ 💖 ❤️ 💕 ❤️";
+
+position:absolute;
+
+width:100%;
+
+font-size:24px;
+
+animation:
+floatHearts 20s linear infinite;
+
+opacity:.15;
+
+}
+
+@keyframes floatHearts{
+
+from{
+
+transform:
+translateY(100vh);
+
+}
+
+to{
+
+transform:
+translateY(-120vh);
+
+}
+
+}
+
+/* =========================
    HEADER
-========================== */
+========================= */
 
 header{
 
 text-align:center;
 
-padding:40px 20px;
+padding:50px 20px;
 
 }
 
@@ -39,14 +98,17 @@ padding:40px 20px;
 
 display:inline-block;
 
-padding:10px 20px;
+padding:12px 22px;
 
-border-radius:20px;
-
-text-decoration:none;
+border-radius:25px;
 
 background:
 rgba(255,255,255,.1);
+
+backdrop-filter:
+blur(10px);
+
+text-decoration:none;
 
 color:white;
 
@@ -56,9 +118,7 @@ margin-bottom:20px;
 
 header h1{
 
-font-size:3rem;
-
-margin-bottom:10px;
+font-size:3.5rem;
 
 background:
 linear-gradient(
@@ -71,25 +131,113 @@ linear-gradient(
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 
+margin-bottom:15px;
+
 }
 
-/* ==========================
-   UPLOAD FORM
-========================== */
+header p{
+
+font-size:1.1rem;
+
+opacity:.8;
+
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+max-width:1200px;
+
+margin:auto;
+
+padding:20px;
+
+}
+
+.stat-card{
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(20px);
+
+padding:25px;
+
+border-radius:25px;
+
+text-align:center;
+
+}
+
+.stat-card h3{
+
+font-size:2rem;
+
+color:#ffd700;
+
+margin-bottom:10px;
+
+}
+
+/* =========================
+   SURPRISE BUTTON
+========================= */
+
+.top-actions{
+
+text-align:center;
+
+margin:20px;
+
+}
+
+.surprise-btn{
+
+padding:15px 30px;
+
+border:none;
+
+border-radius:30px;
+
+cursor:pointer;
+
+font-size:1rem;
+
+font-weight:bold;
+
+background:
+linear-gradient(
+45deg,
+#ff7ac8,
+#ffd700
+);
+
+}
+
+/* =========================
+   UPLOAD
+========================= */
 
 .upload-section{
 
-max-width:700px;
+max-width:800px;
 
-margin:30px auto;
+margin:40px auto;
 
-display:flex;
+padding:30px;
 
-flex-direction:column;
-
-gap:15px;
-
-padding:25px;
+border-radius:30px;
 
 background:
 rgba(255,255,255,.08);
@@ -97,12 +245,25 @@ rgba(255,255,255,.08);
 backdrop-filter:
 blur(15px);
 
-border-radius:25px;
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+.upload-section h2{
+
+text-align:center;
+
+margin-bottom:10px;
 
 }
 
 .upload-section input,
-.upload-section textarea{
+.upload-section textarea,
+.upload-section select{
 
 padding:15px;
 
@@ -135,7 +296,7 @@ border-radius:20px;
 
 cursor:pointer;
 
-font-size:1rem;
+font-weight:bold;
 
 background:
 linear-gradient(
@@ -144,46 +305,123 @@ linear-gradient(
 #ffd700
 );
 
-font-weight:bold;
+}
+
+.favorite-box{
+
+display:flex;
+
+gap:10px;
+
+align-items:center;
 
 }
 
-/* ==========================
-   GALLERY GRID
-========================== */
+/* =========================
+   FOLDERS
+========================= */
 
-.gallery-grid{
+.folder-block{
+
+margin:60px auto;
 
 max-width:1400px;
 
-margin:50px auto;
-
 padding:20px;
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(280px,1fr));
-
-gap:25px;
 
 }
 
-/* ==========================
-   PHOTO CARD
-========================== */
-
-.photo-card{
+.folder-header{
 
 background:
 rgba(255,255,255,.08);
 
 backdrop-filter:
-blur(15px);
+blur(20px);
+
+padding:25px;
 
 border-radius:25px;
 
-overflow:hidden;
+margin-bottom:20px;
+
+}
+
+.folder-title{
+
+font-size:2rem;
+
+margin-bottom:10px;
+
+color:#ffd700;
+
+}
+
+.folder-quote{
+
+opacity:.8;
+
+font-style:italic;
+
+}
+
+/* =========================
+   MASONRY GALLERY
+========================= */
+
+.gallery-grid{
+
+column-count:4;
+
+column-gap:20px;
+
+}
+
+@media(max-width:1100px){
+
+.gallery-grid{
+
+column-count:3;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.gallery-grid{
+
+column-count:2;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.gallery-grid{
+
+column-count:1;
+
+}
+
+}
+
+.photo-card{
+
+break-inside:avoid;
+
+margin-bottom:20px;
+
+background:
+rgba(255,255,255,.08);
+
+padding:12px;
+
+border-radius:20px;
+
+backdrop-filter:
+blur(20px);
 
 transition:.4s;
 
@@ -203,9 +441,7 @@ box-shadow:
 
 width:100%;
 
-height:260px;
-
-object-fit:cover;
+border-radius:15px;
 
 cursor:pointer;
 
@@ -213,15 +449,17 @@ cursor:pointer;
 
 .photo-info{
 
-padding:20px;
+padding:15px 5px;
 
 }
 
-.photo-info h3{
+.photo-title{
 
-margin-top:0;
+font-size:1.1rem;
 
 color:#ffd700;
+
+margin-bottom:8px;
 
 }
 
@@ -229,39 +467,36 @@ color:#ffd700;
 
 color:#ffb7d9;
 
-margin-bottom:10px;
+margin-bottom:8px;
 
 }
 
 .photo-note{
 
-opacity:.9;
+opacity:.85;
 
 line-height:1.6;
 
 }
 
-.delete-btn{
+.favorite-tag{
 
-margin-top:15px;
+display:inline-block;
 
-padding:10px 15px;
+margin-top:10px;
 
-border:none;
+padding:5px 12px;
 
-border-radius:12px;
+border-radius:20px;
 
-cursor:pointer;
-
-background:#ff4b6e;
-
-color:white;
+background:
+rgba(255,215,0,.25);
 
 }
 
-/* ==========================
-   FULLSCREEN VIEWER
-========================== */
+/* =========================
+   VIEWER
+========================= */
 
 .viewer{
 
@@ -274,29 +509,65 @@ width:100%;
 height:100%;
 
 background:
-rgba(0,0,0,.9);
+rgba(0,0,0,.92);
 
 display:none;
 
 justify-content:center;
 align-items:center;
 
+padding:20px;
+
 z-index:9999;
-
-}
-
-.viewer img{
-
-max-width:90%;
-
-max-height:90%;
-
-border-radius:20px;
 
 }
 
 .viewer.active{
 
 display:flex;
+
+}
+
+.viewer-card{
+
+max-width:900px;
+
+width:100%;
+
+text-align:center;
+
+}
+
+.viewer-card img{
+
+max-width:100%;
+
+max-height:70vh;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
+}
+
+#viewerTitle{
+
+color:#ffd700;
+
+margin-bottom:10px;
+
+}
+
+#viewerDate{
+
+color:#ffb7d9;
+
+margin-bottom:10px;
+
+}
+
+#viewerNote{
+
+line-height:1.7;
 
 }
