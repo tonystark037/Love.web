@@ -189,12 +189,23 @@ UPLOAD MEMORY
 
 <!-- SINGLE IMAGE -->
 
+<label>
+
+📸 Select Photos
+
+</label>
+
 <input
 type="file"
 id="imageFile"
-accept="image/*">
+accept="image/*"
+multiple>
 
-<!-- ENTIRE FOLDER -->
+<label>
+
+📂 Select Entire Folder
+
+</label>
 
 <input
 type="file"
@@ -207,46 +218,10 @@ type="text"
 id="photoTitle"
 placeholder="Memory Title (Optional)">
 
-<select
-id="photoFolder">
-
-<option value="General">
-❤️ General
-</option>
-
-<option value="Traveling">
-✈️ Traveling
-</option>
-
-<option value="Eyes">
-👀 Eyes
-</option>
-
-<option value="Saree Special">
-🥻 Saree Special
-</option>
-
-<option value="Dates">
-🌹 Dates
-</option>
-
-<option value="Selfies">
-📸 Selfies
-</option>
-
-<option value="Favorite Smiles">
-😊 Favorite Smiles
-</option>
-
-<option value="Krishna Moments">
-🦚 Krishna Moments
-</option>
-
-<option value="Future Dreams">
-✨ Future Dreams
-</option>
-
-</select>
+<input
+type="text"
+id="photoFolder"
+placeholder="Create Album Name (Example: Goa Trip ❤️)">
 
 <input
 type="date"
@@ -298,9 +273,7 @@ FULLSCREEN VIEWER
 
 <div
 id="viewer"
-class="viewer"
-onclick="closeViewer()">
-
+class="viewer">
 <div
 class="viewer-card">
 
