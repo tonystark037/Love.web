@@ -17,44 +17,23 @@ let storyInterval = null;
 const folderQuotes = {
 
 General:
-"Every memory has a heartbeat ❤️",
-
-Traveling:
-"Every road became beautiful because you were there ❤️",
-
-Eyes:
-"I found my home inside your eyes ❤️",
-
-"Saree Special":
-"Every saree made my heartbeat forget its rhythm ❤️",
-
-Dates:
-"Hours passed, but I never wanted them to end ❤️",
-
-Selfies:
-"A thousand selfies, one beautiful soul ❤️",
-
-"Favorite Smiles":
-"Your smile is my favorite destination ❤️",
-
-"Krishna Moments":
-"Blessed by Krishna, guided by love ❤️",
-
-"Future Dreams":
-"Our future is my favorite dream ❤️"
+"Every memory here is a heartbeat of our story ❤️"
 
 };
 
 async function uploadPhoto(){
 
-const file =
+const files =
 document.getElementById(
 "imageFile"
-).files[0];
+).files;
 
-if(!file){
+if(!files.length){
 
-alert("Select a photo ❤️");
+alert(
+"Select photos ❤️"
+);
+
 return;
 
 }
@@ -67,7 +46,8 @@ document.getElementById(
 const folder =
 document.getElementById(
 "photoFolder"
-).value;
+).value.trim() ||
+"General";
 
 const event_date =
 document.getElementById(
@@ -84,8 +64,17 @@ document.getElementById(
 "favoriteMemory"
 ).checked;
 
+let uploaded = 0;
+
+for(const file of files){
+
 const fileName =
+
 Date.now() +
+"-" +
+Math.random()
+.toString(36)
+.substring(2) +
 "-" +
 file.name.replaceAll(
 " ",
@@ -104,11 +93,11 @@ file
 
 if(uploadError){
 
-alert(
-uploadError.message
+console.error(
+uploadError
 );
 
-return;
+continue;
 
 }
 
@@ -121,20 +110,16 @@ db.storage
 fileName
 );
 
-const image_url =
-urlData.publicUrl;
-
-const {
-error
-} =
 await db
 .from("gallery")
 .insert([{
 
 title:
-title || "❤️ Memory",
+title ||
+file.name,
 
-image_url,
+image_url:
+urlData.publicUrl,
 
 memory_note:
 memory_note || null,
@@ -147,19 +132,18 @@ favorite
 
 }]);
 
-if(error){
-
-alert(
-JSON.stringify(error)
-);
-
-return;
+uploaded++;
 
 }
 
 alert(
-"Memory Saved ❤️"
+uploaded +
+" memories saved ❤️"
 );
+
+document.getElementById(
+"imageFile"
+).value = "";
 
 loadGallery();
 
@@ -546,9 +530,8 @@ block.innerHTML = `
 
 <div class="folder-quote">
 
-${folderQuotes[folder]
-||
-folderQuotes.General}
+${folderQuotes[folder] ||
+`A beautiful chapter called "${folder}" ❤️`}
 
 </div>
 
@@ -873,8 +856,18 @@ continue;
 
 const folderName =
 
+const customFolder =
+document.getElementById(
+"photoFolder"
+).value.trim();
+
+const folderName =
+
+customFolder ||
+
 file.webkitRelativePath
 .split("/")[0] ||
+
 "General";
 
 const fileName =
@@ -990,3 +983,26 @@ initMusic();
 
 }
 );
+const viewer =
+document.getElementById(
+"viewer"
+);
+
+if(viewer){
+
+viewer.addEventListener(
+"click",
+function(e){
+
+if(
+e.target === viewer
+){
+
+closeViewer();
+
+}
+
+}
+);
+
+}
